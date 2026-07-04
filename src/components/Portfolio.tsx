@@ -1,0 +1,68 @@
+import { AdminProvider } from '../context/AdminContext'
+import { PortfolioDataProvider } from '../context/PortfolioDataContext'
+import Navbar from './layout/Navbar'
+import ParticleBackground from './layout/ParticleBackground'
+import HeroSection from './sections/HeroSection'
+import MarqueeSection from './sections/MarqueeSection'
+import AboutSection from './sections/AboutSection'
+import TechStackSection from './sections/TechStackSection'
+import ServicesSection from './sections/ServicesSection'
+import ProjectsSection from './sections/ProjectsSection'
+import MediaSection from './sections/MediaSection'
+import StatsSection from './sections/StatsSection'
+import HealthcareSection from './sections/HealthcareSection'
+import OrganizationsSection from './sections/OrganizationsSection'
+import EducationSection from './sections/EducationSection'
+import TestimonialsSection from './sections/TestimonialsSection'
+import BlogSection from './sections/BlogSection'
+import GallerySection from './sections/GallerySection'
+import FutureProjectsSection from './sections/FutureProjectsSection'
+import ContactSection from './sections/ContactSection'
+import { Link } from 'react-router-dom'
+
+function PortfolioContent() {
+  return (
+    <PortfolioDataProvider>
+      <div style={{ overflowX: 'clip' }}>
+        <ParticleBackground />
+        <Navbar />
+        <HeroSection />
+        <MarqueeSection />
+        <AboutSection />
+        <StatsSection />
+        <TechStackSection />
+        <ServicesSection />
+        <ProjectsSection />
+        <MediaSection />
+        <HealthcareSection />
+        <OrganizationsSection />
+        <EducationSection />
+        <TestimonialsSection />
+        <BlogSection />
+        <GallerySection />
+        <FutureProjectsSection />
+        <ContactSection />
+
+        <footer className="bg-[#0C0C0C] border-t border-white/10 px-5 py-8">
+          <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+            <p className="text-[#D7E2EA]/30 text-xs">&copy; {new Date().getFullYear()} Sadiq Baba Idris. All rights reserved.</p>
+            <Link
+              to="/login"
+              className="text-[#D7E2EA]/20 text-xs hover:text-[#D7E2EA]/50 transition-colors"
+            >
+              Admin
+            </Link>
+          </div>
+        </footer>
+      </div>
+    </PortfolioDataProvider>
+  )
+}
+
+export default function Portfolio() {
+  return (
+    <AdminProvider>
+      <PortfolioContent />
+    </AdminProvider>
+  )
+}
