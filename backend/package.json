@@ -4,6 +4,7 @@
   "description": "Portfolio admin backend API",
   "main": "server.js",
   "scripts": {
+    "build": "npm install --legacy-peer-deps",
     "start": "node server.js",
     "dev": "nodemon server.js",
     "seed": "node seed.js"
