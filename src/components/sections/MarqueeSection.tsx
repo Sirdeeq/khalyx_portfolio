@@ -7,15 +7,9 @@ export default function MarqueeSection() {
   const [offset, setOffset] = useState(0);
 
   const gifImages = useMemo(() => {
-    const images = gallery.flatMap((item) =>
+    return gallery.flatMap((item) =>
       (item.assets || []).filter((a) => a.type === 'image').map((a) => a.src)
     ).filter(Boolean)
-    return images.length >= 4 ? images : [
-      'https://motionsites.ai/assets/hero-space-voyage-preview-eECLH3Yc.gif',
-      'https://motionsites.ai/assets/hero-codenest-preview-Cgppc2qV.gif',
-      'https://motionsites.ai/assets/hero-vex-ventures-preview-BczMFIiw.gif',
-      'https://motionsites.ai/assets/hero-stellar-ai-v2-preview-DjvxjG3C.gif',
-    ];
   }, [gallery]);
 
   useEffect(() => {
@@ -31,6 +25,8 @@ export default function MarqueeSection() {
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  if (gifImages.length < 4) return null
 
   const mid = Math.ceil(gifImages.length / 2);
   const row1 = gifImages.slice(0, mid);
