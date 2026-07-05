@@ -47,19 +47,17 @@ export default function GallerySection() {
           return (
             <div
               key={item.label + i}
-              onClick={() => { if (count > 0) window.location.href = '/gallery' }}
+              onClick={() => { if (first?.src) setLightbox({ src: first.src, type: first.type, label: item.label }) }}
               className={`block w-full rounded-2xl overflow-hidden ${item.aspect} relative group ${count > 0 ? 'cursor-pointer' : 'border border-[var(--border-subtle)]'}`}
             >
               {first?.src ? (
                 first.type === 'video' ? (
                   <>
-                    {(first.thumbnail ? (
+                    {first.thumbnail ? (
                       <img src={first.thumbnail} alt={item.label} className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-300" />
                     ) : (
-                      <div className="w-full h-full bg-gradient-to-br from-[var(--card-bg)] to-black/60 flex items-center justify-center">
-                        <span className="text-[var(--text-body)] text-lg font-semibold drop-shadow-lg px-4 text-center">{item.label}</span>
-                      </div>
-                    ))}
+                      <video src={first.src} muted playsInline preload="metadata" className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-300" />
+                    )}
                     <div className="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/40 transition-colors">
                       <div className="w-14 h-14 rounded-full bg-white/90 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6 text-[#0C0C0C] ml-0.5">

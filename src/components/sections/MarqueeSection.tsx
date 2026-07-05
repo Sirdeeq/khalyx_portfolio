@@ -54,7 +54,7 @@ export default function MarqueeSection() {
           key={i}
           src={slide.src}
           alt=""
-          className="w-[420px] h-[270px] rounded-2xl object-cover flex-shrink-0"
+          className="w-[420px] min-w-[420px] max-w-[420px] h-[270px] rounded-2xl object-cover flex-shrink-0"
           loading="lazy"
         />
       )
@@ -62,7 +62,7 @@ export default function MarqueeSection() {
     return (
       <div
         key={i}
-        className={`w-[420px] h-[270px] rounded-2xl flex-shrink-0 bg-gradient-to-br ${(slide as any).gradient} border border-[var(--border-subtle)] flex items-center justify-center`}
+        className={`w-[420px] min-w-[420px] max-w-[420px] h-[270px] rounded-2xl flex-shrink-0 bg-gradient-to-br ${(slide as any).gradient} border border-[var(--border-subtle)] flex items-center justify-center`}
       >
         <span className="text-[var(--text-muted-30)] text-xs uppercase tracking-wider font-medium px-4 text-center">
           {slide.label}
@@ -73,17 +73,30 @@ export default function MarqueeSection() {
 
   return (
     <section id="media" ref={sectionRef} className="bg-[var(--bg-page)] pt-24 sm:pt-32 md:pt-40 pb-10 overflow-hidden">
-      <div
-        className="flex gap-3 mb-3"
-        style={{ transform: `translateX(${offset}px)`, willChange: 'transform' }}
-      >
-        {[...row1, ...row1, ...row1].map((slide, i) => renderSlide(slide, i))}
-      </div>
-      <div
-        className="flex gap-3"
-        style={{ transform: `translateX(${offset * -1}px)`, willChange: 'transform' }}
-      >
-        {[...row2, ...row2, ...row2].map((slide, i) => renderSlide(slide, i))}
+      {/* Mobile: horizontal scroll */}
+      {row1.length + row2.length > 0 && (
+        <div className="flex md:hidden flex-col gap-3 px-5">
+          <div className="flex gap-3 overflow-x-auto snap-x snap-mandatory hide-scrollbar pb-2">
+            {[...row1, ...row2].map((slide, i) => (
+              <div key={i} className="snap-start shrink-0">{renderSlide(slide, i)}</div>
+            ))}
+          </div>
+        </div>
+      )}
+      {/* Desktop: parallax marquee */}
+      <div className="hidden md:block">
+        <div
+          className="flex gap-3 mb-3"
+          style={{ transform: `translateX(${offset}px)`, willChange: 'transform' }}
+        >
+          {[...row1, ...row1, ...row1].map((slide, i) => renderSlide(slide, i))}
+        </div>
+        <div
+          className="flex gap-3"
+          style={{ transform: `translateX(${offset * -1}px)`, willChange: 'transform' }}
+        >
+          {[...row2, ...row2, ...row2].map((slide, i) => renderSlide(slide, i))}
+        </div>
       </div>
     </section>
   );

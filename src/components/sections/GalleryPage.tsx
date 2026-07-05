@@ -163,7 +163,11 @@ export default function GalleryPage() {
                   {first?.src ? (
                     first.type === 'video' ? (
                       <>
-                        <img src={first.thumbnail || first.src} alt={item.label} className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-300" />
+                        {first.thumbnail ? (
+                          <img src={first.thumbnail} alt={item.label} className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-300" />
+                        ) : (
+                          <video src={first.src} muted playsInline preload="metadata" className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-300" />
+                        )}
                         <div className="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/40 transition-colors">
                           <div className="w-14 h-14 rounded-full bg-white/90 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
                             <svg viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6 text-[#0C0C0C] ml-0.5">

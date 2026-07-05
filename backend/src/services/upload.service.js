@@ -6,7 +6,13 @@ exports.uploadFile = async (file) => {
   let thumbnail = '';
   if (isVideo) {
     try {
-      thumbnail = cloudinary.url(file.filename, { resource_type: 'video', transformation: [{ width: 480, height: 360, crop: 'fill', quality: 'auto' }] });
+      thumbnail = cloudinary.url(file.filename, {
+        resource_type: 'video',
+        format: 'jpg',
+        transformation: [
+          { width: 480, height: 360, crop: 'fill', quality: 'auto', start_offset: 1 }
+        ],
+      });
     } catch { /* thumbnail not critical */ }
   }
   return {
