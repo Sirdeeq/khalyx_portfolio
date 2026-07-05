@@ -26,12 +26,16 @@ export default function MultiAssetUpload({ assets, onChange, maxSlots = MAX }: M
     } catch { toast.error('Upload failed'); return null }
   }
 
-  const handleFile = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]
-    if (!file) return
+  const handleFiles = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files
+    if (!files?.length) return
     e.target.value = ''
-    const asset = await uploadFile(file)
-    if (asset) onChange([...assets, asset])
+    const remaining = maxSlots - assets.length
+    const batch = Array.from(files).slice(0, remaining)
+    if (batch.length < files.length) toast(`Only ${remaining} slot(s) left — uploading first ${remaining}`, { icon: '⚠️' })
+    const results = await Promise.all(batch.map(uploadFile))
+    const added = results.filter(Boolean) as GalleryAsset[]
+    if (added.length) onChange([...assets, ...added])
   }
 
   const remove = (i: number) => {
@@ -112,7 +116,7 @@ export default function MultiAssetUpload({ assets, onChange, maxSlots = MAX }: M
           onClick={() => inputRef.current?.click()}
           className="border-2 border-dashed border-[var(--border-subtle)] rounded-xl p-4 text-center cursor-pointer hover:border-purple-500/40 hover:bg-purple-500/5 transition-all"
         >
-          <input ref={inputRef} type="file" accept="image/*,video/*" onChange={handleFile} className="hidden" />
+          <input ref={inputRef} type="file" accept="image/*,video/*" multiple onChange={handleFiles} className="hidden" />
           <span className="text-sm text-[var(--text-muted)]">+ Add asset ({assets.length}/{maxSlots})</span>
         </div>
       )}

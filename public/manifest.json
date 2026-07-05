@@ -1,0 +1,13 @@
+{
+  "name": "Sadiq Baba Idris | Portfolio",
+  "short_name": "Sirdurx",
+  "description": "Full Stack Developer, UI/UX Designer & Creative Technologist",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0C0C0C",
+  "theme_color": "#0C0C0C",
+  "orientation": "portrait-primary",
+  "icons": [
+    { "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}
