@@ -1,20 +1,40 @@
 import { useQuery } from '@tanstack/react-query'
+import { useState, useEffect } from 'react'
 import { heroApi } from '../../../lib/api/hero'
-import { aboutApi } from '../../../lib/api/about'
 import { projectsApi } from '../../../lib/api/projects'
 import { contactApi } from '../../../lib/api/contact'
+import { visitsApi } from '../../../lib/api/visits'
 import Card from '../../components/ui/Card'
 
+let deferredPrompt: any = null
+window.addEventListener('beforeinstallprompt', (e: Event) => { e.preventDefault(); deferredPrompt = e })
+
 export default function DashboardPage() {
+  const [installable, setInstallable] = useState(false)
+
+  useEffect(() => {
+    if (deferredPrompt) setInstallable(true)
+    const handler = (e: Event) => { e.preventDefault(); deferredPrompt = e; setInstallable(true) }
+    window.addEventListener('beforeinstallprompt', handler)
+    return () => window.removeEventListener('beforeinstallprompt', handler)
+  }, [])
+
+  const handleInstall = async () => {
+    if (!deferredPrompt) return
+    deferredPrompt.prompt()
+    const { outcome } = await deferredPrompt.userChoice
+    if (outcome === 'accepted') { deferredPrompt = null; setInstallable(false) }
+  }
+
   const { data: hero } = useQuery({ queryKey: ['hero'], queryFn: heroApi.get })
-  const { data: about } = useQuery({ queryKey: ['about'], queryFn: aboutApi.get })
   const { data: projects } = useQuery({ queryKey: ['projects'], queryFn: () => projectsApi.list({ limit: 100 }) })
   const { data: contacts } = useQuery({ queryKey: ['contacts'], queryFn: () => contactApi.list({ limit: 100 }) })
+  const { data: visits } = useQuery({ queryKey: ['visits'], queryFn: () => visitsApi.stats(), refetchInterval: 30000 })
 
   const stats = [
+    { label: 'Total Visits', value: visits?.data?.totalVisits ?? 0, color: 'border-cyan-500' },
     { label: 'Projects', value: projects?.data?.length ?? 0, color: 'border-purple-500' },
     { label: 'Hero Roles', value: hero?.data?.roles?.length ?? 0, color: 'border-blue-500' },
-    { label: 'About Values', value: about?.data?.values?.length ?? 0, color: 'border-green-500' },
     { label: 'Messages', value: contacts?.pagination?.total ?? 0, color: 'border-orange-500' },
   ]
 
@@ -45,6 +65,14 @@ export default function DashboardPage() {
                 {action.label}
               </a>
             ))}
+            {installable && (
+              <button
+                onClick={handleInstall}
+                className="w-full text-left px-4 py-3 rounded-xl bg-[var(--card-bg)] hover:bg-[var(--border-subtle)] border border-[var(--border-subtle)] text-[var(--text-body)] text-sm transition-colors"
+              >
+                {installable ? 'Save as App' : 'Install App'}
+              </button>
+            )}
           </div>
         </Card>
 

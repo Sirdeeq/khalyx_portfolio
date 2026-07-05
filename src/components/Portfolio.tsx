@@ -1,4 +1,5 @@
-﻿import { AdminProvider } from '../context/AdminContext'
+﻿import { useEffect, useState } from 'react'
+import { AdminProvider } from '../context/AdminContext'
 import { PortfolioDataProvider } from '../context/PortfolioDataContext'
 import Navbar from './layout/Navbar'
 import ParticleBackground from './layout/ParticleBackground'
@@ -18,11 +19,21 @@ import BlogSection from './sections/BlogSection'
 import GallerySection from './sections/GallerySection'
 import FutureProjectsSection from './sections/FutureProjectsSection'
 import ContactSection from './sections/ContactSection'
+import CookieConsent from './ui/CookieConsent'
+import { visitsApi } from '../lib/api/visits'
 import { Link } from 'react-router-dom'
 
 function PortfolioContent() {
+  const [tracked, setTracked] = useState(false)
+  useEffect(() => {
+    if (tracked) return
+    setTracked(true)
+    visitsApi.track()
+  }, [tracked])
+
   return (
     <PortfolioDataProvider>
+      <CookieConsent />
       <div style={{ overflowX: 'clip' }} className="pb-16 md:pb-0">
         <ParticleBackground />
         <Navbar />
