@@ -8,6 +8,10 @@ import { techStackApi } from '../lib/api/techStack'
 import { servicesApi } from '../lib/api/services'
 import { mediaApi } from '../lib/api/media'
 import { healthcareApi } from '../lib/api/healthcare'
+import { organizationsApi } from '../lib/api/organizations'
+import { testimonialsApi } from '../lib/api/testimonials'
+import { blogApi } from '../lib/api/blog'
+import { futureProjectsApi } from '../lib/api/futureProjects'
 import { defaults } from './AdminContext'
 
 export interface PortfolioData {
@@ -22,6 +26,10 @@ export interface PortfolioData {
   services: Array<{ name: string; description: string; icon: string }>
   media: { title: string; timeline: Array<{ title: string; period: string; detail: string }>; services: string[] }
   healthcare: Array<{ _id?: string; title: string; period: string; brief: string; responsibilities: string[]; highlight?: string }>
+  organizations: Array<{ name: string; role: string; description: string; url: string }>
+  testimonials: Array<{ name: string; role: string; company: string; text: string; avatar: string; rating: number }>
+  blogPosts: Array<{ _id?: string; title: string; slug: string; excerpt: string; image: string; tags: string[]; readTime: string; createdAt: string }>
+  futureProjects: Array<{ name: string; description: string; category: string; status: string }>
 }
 
 const defaultData: PortfolioData = {
@@ -33,6 +41,10 @@ const defaultData: PortfolioData = {
   services: defaults.services.map(s => ({ name: s, description: '', icon: '' })),
   media: defaults.media,
   healthcare: defaults.healthcare as PortfolioData['healthcare'],
+  organizations: defaults.organizations,
+  testimonials: defaults.testimonials,
+  blogPosts: [],
+  futureProjects: defaults.futureProjects,
 }
 
 const PortfolioDataContext = createContext<PortfolioData>(defaultData)
@@ -48,6 +60,10 @@ export function PortfolioDataProvider({ children }: { children: React.ReactNode 
       { queryKey: ['services'], queryFn: servicesApi.list, staleTime: 60000, retry: false },
       { queryKey: ['media'], queryFn: mediaApi.get, staleTime: 60000, retry: false },
       { queryKey: ['healthcare'], queryFn: healthcareApi.list, staleTime: 60000, retry: false },
+      { queryKey: ['organizations'], queryFn: organizationsApi.list, staleTime: 60000, retry: false },
+      { queryKey: ['testimonials'], queryFn: testimonialsApi.list, staleTime: 60000, retry: false },
+      { queryKey: ['blog'], queryFn: () => blogApi.list({ limit: 50 }), staleTime: 60000, retry: false },
+      { queryKey: ['futureProjects'], queryFn: futureProjectsApi.list, staleTime: 60000, retry: false },
     ],
   })
 
@@ -59,6 +75,10 @@ export function PortfolioDataProvider({ children }: { children: React.ReactNode 
   const servicesRaw = results[5].data
   const mediaData = results[6].data?.data
   const healthcareRaw = results[7].data
+  const orgsRaw = results[8].data
+  const testimRaw = results[9].data
+  const blogRaw = results[10].data
+  const futureRaw = results[11].data
 
   const data: PortfolioData = {
     hero: heroData ? { roles: heroData.roles, tagline: heroData.tagline, portrait: heroData.portrait } : defaultData.hero,
@@ -74,6 +94,13 @@ export function PortfolioDataProvider({ children }: { children: React.ReactNode 
     services: Array.isArray(servicesRaw?.data) && servicesRaw.data.length ? servicesRaw.data.map((s: any) => ({ name: s.name, description: s.description, icon: s.icon })) : defaultData.services,
     media: mediaData ? { title: mediaData.title, timeline: mediaData.timeline || [], services: mediaData.services || [] } : defaultData.media,
     healthcare: Array.isArray(healthcareRaw?.data) && healthcareRaw.data.length ? healthcareRaw.data as PortfolioData['healthcare'] : defaultData.healthcare,
+    organizations: Array.isArray(orgsRaw?.data) && orgsRaw.data.length ? orgsRaw.data : defaultData.organizations,
+    testimonials: Array.isArray(testimRaw?.data) && testimRaw.data.length ? testimRaw.data : defaultData.testimonials,
+    blogPosts: Array.isArray(blogRaw?.data) && blogRaw.data.length ? blogRaw.data.map((p: any) => ({
+      _id: p._id, title: p.title, slug: p.slug, excerpt: p.excerpt || '', image: p.image || '',
+      tags: p.tags || [], readTime: p.readTime || '', createdAt: p.createdAt || '',
+    })) : [],
+    futureProjects: Array.isArray(futureRaw?.data) && futureRaw.data.length ? futureRaw.data : defaultData.futureProjects,
   }
 
   return (

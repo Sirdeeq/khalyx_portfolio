@@ -28,6 +28,9 @@ export interface SiteData {
   services: string[]
   media: { title: string; timeline: { title: string; period: string; detail: string }[]; services: string[] }
   healthcare: { title: string; period: string; brief: string; responsibilities: string[] }[]
+  organizations: { name: string; role: string; description: string; url: string }[]
+  testimonials: { name: string; role: string; company: string; text: string; avatar: string; rating: number }[]
+  futureProjects: { name: string; description: string; category: string; status: string }[]
 }
 
 /* ── Defaults ── */
@@ -81,6 +84,9 @@ const defaults: SiteData = {
     { title: 'Chairman – Voice of Adolescents (VOA)', period: 'Present', brief: 'Youth-led organization supporting adolescents living with HIV', responsibilities: ['Lead and coordinate organizational activities', 'Strategic planning and program implementation'] },
     { title: 'Peer Navigator – iCare+ NAF', period: 'Present', brief: 'Providing peer support for adolescents living with HIV', responsibilities: ['Peer counseling and adherence support', 'Health education sessions'] },
   ],
+  organizations: [],
+  testimonials: [],
+  futureProjects: [],
 }
 
 const STORAGE_KEY = 'portfolio_admin_data'

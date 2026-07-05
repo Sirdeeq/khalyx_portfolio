@@ -101,3 +101,53 @@ export interface ServiceData {
   icon: string
   order: number
 }
+
+export interface OrganizationData {
+  _id: string
+  name: string
+  role: string
+  description: string
+  logo: string
+  url: string
+  order: number
+  isActive: boolean
+}
+
+export interface TestimonialData {
+  _id: string
+  name: string
+  role: string
+  company: string
+  text: string
+  avatar: string
+  rating: number
+  order: number
+  isActive: boolean
+}
+
+export interface BlogData {
+  _id: string
+  title: string
+  slug: string
+  excerpt: string
+  content: string
+  image: string
+  author: string
+  tags: string[]
+  readTime: string
+  isPublished: boolean
+  order: number
+  createdAt: string
+  updatedAt: string
+}
+
+export interface FutureProjectData {
+  _id: string
+  name: string
+  description: string
+  category: string
+  status: 'Planned' | 'In Development' | 'Coming Soon'
+  image: string
+  order: number
+  isActive: boolean
+}

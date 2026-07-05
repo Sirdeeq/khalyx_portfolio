@@ -41,6 +41,10 @@ app.use('/api/tech-stack', require('./routes/techStack.routes'));
 app.use('/api/services', require('./routes/service.routes'));
 app.use('/api/media', require('./routes/media.routes'));
 app.use('/api/healthcare', require('./routes/healthcare.routes'));
+app.use('/api/organizations', require('./routes/organization.routes'));
+app.use('/api/testimonials', require('./routes/testimonial.routes'));
+app.use('/api/blog', require('./routes/blog.routes'));
+app.use('/api/future-projects', require('./routes/futureProject.routes'));
 app.use('/api/contact', require('./routes/contact.routes'));
 app.use('/api/upload', require('./routes/upload.routes'));
 

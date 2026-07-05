@@ -16,6 +16,12 @@ import AboutEditPage from './admin/pages/about/AboutEditPage'
 import ProjectListPage from './admin/pages/projects/ProjectListPage'
 import ProjectCreatePage from './admin/pages/projects/ProjectCreatePage'
 import ProjectEditPage from './admin/pages/projects/ProjectEditPage'
+import OrganizationsPage from './admin/pages/organizations/OrganizationsPage'
+import TestimonialsPage from './admin/pages/testimonials/TestimonialsPage'
+import BlogListPage from './admin/pages/blog/BlogListPage'
+import BlogCreatePage from './admin/pages/blog/BlogCreatePage'
+import BlogEditPage from './admin/pages/blog/BlogEditPage'
+import FutureProjectsPage from './admin/pages/futureProjects/FutureProjectsPage'
 import GalleryListPage from './admin/pages/gallery/GalleryListPage'
 import TechStackPage from './admin/pages/techStack/TechStackPage'
 import ServicesPage from './admin/pages/services/ServicesPage'
@@ -30,6 +36,7 @@ import UnauthorizedPage from './admin/pages/errors/UnauthorizedPage'
 
 /* Portfolio */
 import Portfolio from './components/Portfolio'
+import BlogDetailPage from './components/sections/BlogDetailPage'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -57,6 +64,12 @@ export default function App() {
               <Route path="projects" element={<ProjectListPage />} />
               <Route path="projects/create" element={<ProjectCreatePage />} />
               <Route path="projects/edit/:id" element={<ProjectEditPage />} />
+              <Route path="organizations" element={<OrganizationsPage />} />
+              <Route path="testimonials" element={<TestimonialsPage />} />
+              <Route path="blog" element={<BlogListPage />} />
+              <Route path="blog/create" element={<BlogCreatePage />} />
+              <Route path="blog/edit/:id" element={<BlogEditPage />} />
+              <Route path="future-projects" element={<FutureProjectsPage />} />
               <Route path="gallery" element={<GalleryListPage />} />
               <Route path="tech-stack" element={<TechStackPage />} />
               <Route path="services" element={<ServicesPage />} />
@@ -70,6 +83,9 @@ export default function App() {
           {/* Error routes */}
           <Route path="/401" element={<UnauthorizedPage />} />
           <Route path="/404" element={<NotFoundPage />} />
+
+          {/* Blog detail */}
+          <Route path="/blog/:slug" element={<BlogDetailPage />} />
 
           {/* Portfolio — catch-all */}
           <Route path="*" element={<Portfolio />} />

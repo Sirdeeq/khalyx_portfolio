@@ -1,42 +1,17 @@
+import { Link } from 'react-router-dom'
 import FadeIn from '../ui/FadeIn'
-
-const posts = [
-  {
-    title: 'Building Scalable Web Applications with React and Next.js',
-    category: 'Technology',
-    excerpt: 'Explore the architectural patterns and best practices for building production-ready web applications using React and Next.js, from project structure to deployment.',
-    date: 'Coming Soon',
-  },
-  {
-    title: 'The Role of Technology in Modern Healthcare',
-    category: 'Healthcare Tech',
-    excerpt: 'How digital tools, telemedicine, and health information systems are transforming healthcare delivery and patient outcomes across the globe.',
-    date: 'Coming Soon',
-  },
-  {
-    title: "Getting Started with Motion Graphics: A Beginner's Guide",
-    category: 'Design',
-    excerpt: 'A practical introduction to motion graphics covering essential tools, techniques, and principles for creating engaging animated content.',
-    date: 'Coming Soon',
-  },
-  {
-    title: 'My Journey as a Full Stack Developer in Nigeria',
-    category: 'Career',
-    excerpt: 'Personal insights and lessons learned from navigating the tech industry in Nigeria, from starting out to building real-world solutions.',
-    date: 'Coming Soon',
-  },
-]
-
-const categoryColors: Record<string, string> = {
-  Technology: 'from-blue-600 to-cyan-600',
-  'Healthcare Tech': 'from-emerald-600 to-teal-600',
-  Design: 'from-violet-600 to-purple-600',
-  Career: 'from-amber-600 to-orange-600',
-}
+import { usePortfolioData } from '../../context/PortfolioDataContext'
+import { Clock, ArrowRight } from 'lucide-react'
 
 export default function BlogSection() {
+  const { blogPosts } = usePortfolioData()
+
+  if (!blogPosts.length) return null
+
+  const posts = blogPosts.slice(0, 3)
+
   return (
-    <section className="bg-[#0C0C0C] px-5 sm:px-8 md:px-10 py-20 sm:py-24 md:py-32">
+    <section id="blog" className="bg-[#0C0C0C] px-5 sm:px-8 md:px-10 py-20 sm:py-24 md:py-32">
       <FadeIn y={40}>
         <h2
           className="hero-heading font-black uppercase leading-none tracking-tight text-center mb-16 sm:mb-20"
@@ -46,25 +21,50 @@ export default function BlogSection() {
         </h2>
       </FadeIn>
 
-      <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-6">
+      <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6">
         {posts.map((post, i) => (
-          <FadeIn key={post.title} delay={0.05 * i} y={20}>
-            <div className="bg-white/5 backdrop-blur-xl rounded-2xl border border-white/10 overflow-hidden hover:border-white/20 transition-all duration-300 group h-full">
-              <div className={`h-2 bg-gradient-to-r ${categoryColors[post.category]}`} />
-              <div className="p-6">
-                <span className={`inline-block text-xs font-semibold text-white px-3 py-1 rounded-full bg-gradient-to-r ${categoryColors[post.category]}`}>
-                  {post.category}
-                </span>
-                <h3 className="text-lg sm:text-xl font-bold text-[#D7E2EA] mt-3 mb-2 group-hover:text-white transition-colors">
-                  {post.title}
-                </h3>
-                <p className="text-[#D7E2EA]/60 text-sm leading-relaxed mb-4">{post.excerpt}</p>
-                <span className="text-[#D7E2EA]/40 text-xs">{post.date}</span>
+          <FadeIn key={post._id || post.slug} y={20} delay={i * 0.1}>
+            <Link to={`/blog/${post.slug}`} className="block h-full">
+              <div className="bg-white/5 backdrop-blur-xl rounded-2xl border border-white/10 overflow-hidden hover:border-white/20 hover:bg-white/[0.07] transition-all duration-300 group h-full flex flex-col">
+                <div className="aspect-[16/9] bg-gradient-to-br from-[#18011F] via-[#B600A8]/30 to-[#7621B0]/30 flex items-center justify-center">
+                  {post.image ? (
+                    <img src={post.image} alt={post.title} className="w-full h-full object-cover" />
+                  ) : (
+                    <span className="text-[#D7E2EA]/20 text-4xl font-black">S</span>
+                  )}
+                </div>
+                <div className="p-5 flex-1 flex flex-col">
+                  <div className="flex items-center gap-3 text-[#D7E2EA]/40 text-xs mb-3">
+                    {post.readTime && <span className="flex items-center gap-1"><Clock size={12} />{post.readTime}</span>}
+                  </div>
+                  <h3 className="text-[#D7E2EA] font-bold text-base mb-2 line-clamp-2 group-hover:text-white transition-colors">{post.title}</h3>
+                  {post.excerpt && <p className="text-[#D7E2EA]/60 text-sm line-clamp-2 flex-1">{post.excerpt}</p>}
+                  {post.tags?.length > 0 && (
+                    <div className="flex gap-1.5 mt-3 flex-wrap">
+                      {post.tags.slice(0, 3).map((tag) => (
+                        <span key={tag} className="text-[10px] text-[#D7E2EA]/40 bg-white/5 rounded-full px-2 py-0.5">{tag}</span>
+                      ))}
+                    </div>
+                  )}
+                  <div className="flex items-center gap-1 text-[#B600A8] text-xs font-medium mt-3 group-hover:gap-2 transition-all">
+                    Read more <ArrowRight size={12} />
+                  </div>
+                </div>
               </div>
-            </div>
+            </Link>
           </FadeIn>
         ))}
       </div>
+
+      {blogPosts.length > 3 && (
+        <FadeIn y={20} delay={0.3}>
+          <div className="text-center mt-10">
+            <Link to="/blog" className="inline-flex items-center gap-2 text-[#D7E2EA]/50 hover:text-[#D7E2EA] text-sm transition-colors">
+              View all posts <ArrowRight size={14} />
+            </Link>
+          </div>
+        </FadeIn>
+      )}
     </section>
   )
 }

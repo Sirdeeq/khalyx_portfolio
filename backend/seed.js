@@ -9,6 +9,7 @@ const TechStack = require('./src/models/TechStack');
 const Service = require('./src/models/Service');
 const Media = require('./src/models/Media');
 const Healthcare = require('./src/models/Healthcare');
+const Blog = require('./src/models/Blog');
 
 const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'admin@example.com';
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'admin123';
@@ -29,6 +30,7 @@ const seed = async () => {
       Service.deleteMany({}),
       Media.deleteMany({}),
       Healthcare.deleteMany({}),
+      Blog.deleteMany({}),
     ]);
     console.log('Cleared existing data');
 
@@ -216,6 +218,52 @@ const seed = async () => {
     ];
     await Healthcare.create(healthcareItems);
     console.log(`Healthcare seeded: ${healthcareItems.length} items`);
+
+    /* Blog */
+    const blogs = [
+      {
+        title: 'Building Scalable Web Applications with React and Node.js',
+        slug: 'building-scalable-web-apps-react-nodejs',
+        excerpt: 'A comprehensive guide to building production-ready web applications using the MERN stack, covering architecture patterns, state management, and deployment strategies.',
+        content: `Building a scalable web application requires careful planning from the ground up. In this post, I'll share my experience and best practices for creating production-ready applications using React and Node.js.\n\n## Architecture Patterns\n\nWhen starting a new project, choosing the right architecture is crucial. I typically use a feature-based folder structure that groups components, hooks, and utilities by feature rather than by type.\n\n## State Management\n\nFor state management, I prefer using React Query for server state and Zustand for client state. This combination keeps your code clean and your UI responsive.\n\n## API Design\n\nA well-designed REST API is the backbone of any scalable application. I follow resource-based naming, proper HTTP methods, and comprehensive error handling.\n\n## Deployment\n\nFor deployment, I use Vercel for frontend applications and Render for backend services. Both platforms offer excellent free tiers and simple CI/CD integration.`,
+        image: '',
+        tags: ['React', 'Node.js', 'Web Development', 'Architecture'],
+        readTime: '5 min read',
+        order: 0,
+      },
+      {
+        title: 'The Role of Technology in Adolescent Healthcare',
+        slug: 'technology-adolescent-healthcare',
+        excerpt: 'How digital tools and platforms are transforming healthcare delivery for adolescents, improving treatment adherence, and enabling better health outcomes.',
+        content: `Technology is playing an increasingly vital role in healthcare, particularly for adolescents who are digital natives. Here's how I've seen technology make a difference.\n\n## Digital Health Records\n\nDigital systems replace paper-based records, making patient data accessible, secure, and easy to update. This improves coordination between healthcare providers.\n\n## Appointment and Follow-up Systems\n\nAutomated reminders via SMS and WhatsApp have significantly improved appointment adherence rates among adolescents.\n\n## Peer Support Platforms\n\nDigital platforms enable peer-to-peer support, education, and community building — essential for adolescents managing chronic conditions.\n\n## Data-Driven Insights\n\nWith proper data collection and analysis, healthcare organizations can identify trends, measure impact, and continuously improve their services.`,
+        image: '',
+        tags: ['Healthcare', 'Technology', 'Adolescent Health', 'Social Impact'],
+        readTime: '4 min read',
+        order: 1,
+      },
+      {
+        title: 'From Graphic Design to Full Stack Development: My Journey',
+        slug: 'from-graphic-design-to-fullstack',
+        excerpt: 'How my background in graphic design and multimedia shaped my approach to software development and why creative skills matter in engineering.',
+        content: `My journey into tech didn't start with code — it started with design. Here's how my creative background influences my development work today.\n\n## The Design Foundation\n\nStarting as a graphic designer taught me the importance of visual hierarchy, color theory, and user-centered thinking. These principles directly translate to UI/UX design in web development.\n\n## The Transition to Code\n\nI began with HTML and CSS, moved to JavaScript, and eventually full-stack development with React and Node.js. Each step built on the previous one.\n\n## Why Creative Skills Matter\n\nThe best developers understand that code is a means to an end — creating great user experiences. My design background helps me build interfaces that are not only functional but beautiful.\n\n## Advice for Aspiring Developers\n\nDon't underestimate the value of adjacent skills. Design, communication, and project management are just as important as technical abilities.`,
+        image: '',
+        tags: ['Career', 'Design', 'Development', 'Personal'],
+        readTime: '6 min read',
+        order: 2,
+      },
+      {
+        title: 'Building Mobile Apps with React Native: Tips and Tricks',
+        slug: 'react-native-tips-tricks',
+        excerpt: 'Practical advice for building cross-platform mobile applications with React Native, from project setup to performance optimization.',
+        content: `React Native has been my go-to framework for mobile development. Here are some tips I've learned along the way.\n\n## Project Setup\n\nStart with the React Native CLI (not Expo) for more control over native modules. Set up TypeScript from day one — it saves countless debugging hours.\n\n## Navigation\n\nReact Navigation is the standard. Use a stack navigator for auth flow and a tab navigator for the main app screen.\n\n## State Management\n\nFor mobile apps, keep state management simple. React Query is excellent for API data, and React's built-in useState/useReducer handles most UI state.\n\n## Performance\n\nUse FlatList instead of ScrollView for long lists. Optimize images with react-native-fast-image. Avoid unnecessary re-renders with React.memo and useCallback.`,
+        image: '',
+        tags: ['React Native', 'Mobile', 'JavaScript', 'Performance'],
+        readTime: '5 min read',
+        order: 3,
+      },
+    ];
+    await Blog.create(blogs);
+    console.log(`Blog seeded: ${blogs.length} posts`);
 
     await mongoose.disconnect();
     console.log('Seed complete. Disconnected from MongoDB.');

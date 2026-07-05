@@ -1,64 +1,54 @@
 import FadeIn from '../ui/FadeIn'
+import { usePortfolioData } from '../../context/PortfolioDataContext'
+import { Sparkles, Lightbulb, Rocket } from 'lucide-react'
 
-const projects = [
-  {
-    title: 'AI Healthcare Platform',
-    desc: 'AI-powered healthcare diagnostics and patient management system leveraging machine learning for early detection and personalized treatment plans.',
-    gradient: 'from-purple-600 to-indigo-600',
-  },
-  {
-    title: 'AI Video Generator',
-    desc: 'Automated video creation platform using artificial intelligence to generate professional-grade videos from text prompts and templates.',
-    gradient: 'from-cyan-600 to-blue-600',
-  },
-  {
-    title: 'FinTech Products',
-    desc: 'Next-generation financial technology solutions including digital banking, payment processing, and decentralized finance applications.',
-    gradient: 'from-emerald-600 to-teal-600',
-  },
-  {
-    title: 'SaaS Applications',
-    desc: 'Scalable software-as-a-service platforms designed for businesses of all sizes, with focus on performance, security, and user experience.',
-    gradient: 'from-violet-600 to-purple-600',
-  },
-  {
-    title: 'Creative Agency',
-    desc: 'Full-service digital creative agency offering web development, motion graphics, branding, and digital marketing solutions.',
-    gradient: 'from-rose-600 to-pink-600',
-  },
-  {
-    title: 'Healthcare Information System',
-    desc: 'Comprehensive healthcare data management platform for patient records, treatment tracking, and health analytics.',
-    gradient: 'from-amber-600 to-orange-600',
-  },
-]
+const statusIcons: Record<string, typeof Sparkles> = {
+  'Planned': Lightbulb,
+  'In Development': Rocket,
+  'Coming Soon': Sparkles,
+}
+
+const statusColors: Record<string, string> = {
+  'Planned': 'text-yellow-400 border-yellow-400/30 bg-yellow-400/10',
+  'In Development': 'text-blue-400 border-blue-400/30 bg-blue-400/10',
+  'Coming Soon': 'text-green-400 border-green-400/30 bg-green-400/10',
+}
 
 export default function FutureProjectsSection() {
+  const { futureProjects } = usePortfolioData()
+
+  if (!futureProjects.length) return null
+
   return (
-    <section className="bg-[#0C0C0C] px-5 sm:px-8 md:px-10 py-20 sm:py-24 md:py-32">
+    <section id="future-projects" className="bg-white rounded-t-[40px] sm:rounded-t-[50px] md:rounded-t-[60px] px-5 sm:px-8 md:px-10 py-20 sm:py-24 md:py-32">
       <FadeIn y={40}>
         <h2
-          className="hero-heading font-black uppercase leading-none tracking-tight text-center mb-16 sm:mb-20"
+          className="text-[#0C0C0C] font-black uppercase text-center mb-16 sm:mb-20"
           style={{ fontSize: 'clamp(3rem, 12vw, 160px)' }}
         >
           Future Projects
         </h2>
       </FadeIn>
 
-      <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {projects.map((project, i) => (
-          <FadeIn key={project.title} delay={0.05 * i} y={20}>
-            <div className="bg-white/5 backdrop-blur-xl rounded-2xl border border-white/10 overflow-hidden hover:border-white/20 transition-all duration-300 group h-full">
-              <div className={`h-2 bg-gradient-to-r ${project.gradient}`} />
-              <div className="p-6">
-                <h3 className="text-xl font-bold text-[#D7E2EA] mb-3 group-hover:text-white transition-colors">
-                  {project.title}
-                </h3>
-                <p className="text-[#D7E2EA]/60 text-sm leading-relaxed">{project.desc}</p>
+      <div className="max-w-5xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+        {futureProjects.map((project, i) => {
+          const StatusIcon = statusIcons[project.status] || Sparkles
+          const statusColor = statusColors[project.status] || 'text-yellow-400 border-yellow-400/30 bg-yellow-400/10'
+
+          return (
+            <FadeIn key={project.name} y={20} delay={i * 0.1}>
+              <div className="bg-[#0C0C0C]/5 rounded-2xl p-6 hover:bg-[#0C0C0C]/10 transition-all duration-300 h-full flex flex-col">
+                <div className={`inline-flex items-center gap-1.5 text-[10px] font-medium uppercase tracking-wider rounded-full border px-3 py-1 mb-4 w-fit ${statusColor}`}>
+                  <StatusIcon size={12} />
+                  {project.status}
+                </div>
+                <h3 className="text-[#0C0C0C] font-bold text-lg mb-2">{project.name}</h3>
+                {project.category && <span className="text-[#0C0C0C]/40 text-xs uppercase tracking-wider mb-2">{project.category}</span>}
+                {project.description && <p className="text-[#0C0C0C]/60 text-sm flex-1">{project.description}</p>}
               </div>
-            </div>
-          </FadeIn>
-        ))}
+            </FadeIn>
+          )
+        })}
       </div>
     </section>
   )
