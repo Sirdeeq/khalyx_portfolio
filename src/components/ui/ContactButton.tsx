@@ -4,11 +4,11 @@ interface ContactButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   className?: string
 }
 
-export default function ContactButton({ className, ...rest }: ContactButtonProps) {
+export default function ContactButton({ className, children, ...rest }: ContactButtonProps) {
   return (
     <button
-      type="button"
-      className={`rounded-full font-medium uppercase tracking-widest text-white px-8 py-3 sm:px-10 sm:py-3.5 md:px-12 md:py-4 text-xs sm:text-sm md:text-base ${className ?? ''}`}
+      type="submit"
+      className={`rounded-full font-medium uppercase tracking-widest text-white px-8 py-3 sm:px-10 sm:py-3.5 md:px-12 md:py-4 text-xs sm:text-sm md:text-base disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 ${className ?? ''}`}
       style={{
         background:
           'linear-gradient(123deg, #18011F 7%, #B600A8 37%, #7621B0 72%, #BE4C00 100%)',
@@ -19,7 +19,7 @@ export default function ContactButton({ className, ...rest }: ContactButtonProps
       }}
       {...rest}
     >
-      Contact Me
+      {children ?? 'Contact Me'}
     </button>
   )
 }

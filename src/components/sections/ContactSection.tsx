@@ -1,9 +1,9 @@
 import { useState, type FormEvent } from 'react'
-import { Mail, Code, Camera, Heart, Phone, Smartphone } from 'lucide-react'
+import { Mail, Code, Camera, Heart, Phone, Smartphone, Loader2 } from 'lucide-react'
 import FadeIn from '../ui/FadeIn'
 import ContactButton from '../ui/ContactButton'
+import { contactApi } from '../../lib/api/contact'
 
-/* ── Inline SVG brand icons (lucide-react has no brand icons) ── */
 const InstagramIcon = () => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-[#D7E2EA] group-hover:text-white" width={20} height={20}>
     <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
@@ -70,27 +70,23 @@ const reasons = [
 ]
 
 export default function ContactSection() {
-  const [form, setForm] = useState({ name: '', email: '', reason: '', message: '' })
+  const [form, setForm] = useState({ name: '', email: '', phone: '', reason: '', message: '' })
   const [sent, setSent] = useState(false)
+  const [loading, setLoading] = useState(false)
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
-
-    const subject = encodeURIComponent(`[${form.reason}] Contact from ${form.name}`)
-    const body = encodeURIComponent(
-      `Name: ${form.name}\nEmail: ${form.email}\nReason: ${form.reason}\n\nMessage:\n${form.message}`,
-    )
-
-    window.open(`mailto:ssirdeeq@gmail.com?subject=${subject}&body=${body}`, '_blank')
-
-    const whatsappMsg = encodeURIComponent(
-      `*New Contact*\n\nName: ${form.name}\nEmail: ${form.email}\nReason: ${form.reason}\nMessage: ${form.message}`,
-    )
-    window.open(`https://wa.me/2348027999992?text=${whatsappMsg}`, '_blank')
-
-    setSent(true)
-    setForm({ name: '', email: '', reason: '', message: '' })
-    setTimeout(() => setSent(false), 5000)
+    setLoading(true)
+    try {
+      await contactApi.send(form)
+      setSent(true)
+      setForm({ name: '', email: '', phone: '', reason: '', message: '' })
+      setTimeout(() => setSent(false), 5000)
+    } catch {
+      /* error shown by toast interceptor */
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -139,7 +135,7 @@ export default function ContactSection() {
                 <span className="text-green-400 text-3xl">✓</span>
               </div>
               <h3 className="text-2xl font-bold text-[#D7E2EA] mb-2">Message Sent!</h3>
-              <p className="text-[#D7E2EA]/60">Your message has been sent to my email and WhatsApp. I'll get back to you shortly.</p>
+              <p className="text-[#D7E2EA]/60">Your message has been sent. I'll get back to you shortly.</p>
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-5">
@@ -161,6 +157,14 @@ export default function ContactSection() {
                   className="w-full bg-white/5 border border-white/10 rounded-xl px-5 py-4 text-[#D7E2EA] placeholder:text-[#D7E2EA]/30 outline-none focus:border-white/30 transition-colors text-sm"
                 />
               </div>
+
+              <input
+                type="tel"
+                placeholder="Your Phone (for WhatsApp reply)"
+                value={form.phone}
+                onChange={(e) => setForm({ ...form, phone: e.target.value })}
+                className="w-full bg-white/5 border border-white/10 rounded-xl px-5 py-4 text-[#D7E2EA] placeholder:text-[#D7E2EA]/30 outline-none focus:border-white/30 transition-colors text-sm"
+              />
 
               <select
                 required
@@ -191,7 +195,10 @@ export default function ContactSection() {
                 Your message will be sent to my email and WhatsApp. I typically respond within 30 minutes during business hours.
               </p>
 
-              <ContactButton className="w-full" />
+              <ContactButton disabled={loading}>
+                {loading ? <Loader2 className="animate-spin" size={18} /> : null}
+                {loading ? 'Sending...' : 'Send Message'}
+              </ContactButton>
             </form>
           )}
         </FadeIn>
