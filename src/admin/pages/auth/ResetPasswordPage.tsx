@@ -20,21 +20,21 @@ export default function ResetPasswordPage() {
 
   if (done) {
     return (
-      <div className="min-h-screen bg-[#0C0C0C] flex items-center justify-center p-4">
-        <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8 w-full max-w-sm text-center">
+      <div className="min-h-screen bg-[var(--bg-page)] flex items-center justify-center p-4">
+        <div className="bg-[var(--card-bg)] backdrop-blur-xl border border-[var(--border-subtle)] rounded-2xl p-8 w-full max-w-sm text-center">
           <p className="text-green-400 text-sm mb-4">Password reset successful!</p>
-          <Link to="/login" className="text-sm text-[#D7E2EA]/60 hover:text-[#D7E2EA] transition-colors">Go to Login</Link>
+          <Link to="/login" className="text-sm text-[var(--text-muted-60)] hover:text-[var(--text-body)] transition-colors">Go to Login</Link>
         </div>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-[#0C0C0C] flex items-center justify-center p-4">
+    <div className="min-h-screen bg-[var(--bg-page)] flex items-center justify-center p-4">
       <div className="w-full max-w-sm">
-        <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8">
-          <h1 className="text-2xl font-bold text-[#D7E2EA] text-center mb-2">Reset Password</h1>
-          <p className="text-[#D7E2EA]/50 text-sm text-center mb-6">Enter your new password</p>
+        <div className="bg-[var(--card-bg)] backdrop-blur-xl border border-[var(--border-subtle)] rounded-2xl p-8">
+          <h1 className="text-2xl font-bold text-[var(--text-body)] text-center mb-2">Reset Password</h1>
+          <p className="text-[var(--text-muted)] text-sm text-center mb-6">Enter your new password</p>
           <form onSubmit={handleSubmit} className="space-y-4">
             <input type="hidden" value={token} />
             <input
@@ -44,7 +44,7 @@ export default function ResetPasswordPage() {
               placeholder="New password"
               required
               minLength={6}
-              className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-[#D7E2EA] placeholder:text-[#D7E2EA]/30 outline-none focus:border-white/30 transition-colors text-sm"
+              className="w-full bg-[var(--card-bg)] border border-[var(--border-subtle)] rounded-xl px-4 py-2.5 text-[var(--text-body)] placeholder:text-[var(--text-muted-30)] outline-none focus:border-[var(--text-muted-30)] transition-colors text-sm"
             />
             <input
               type="password"
@@ -53,7 +53,7 @@ export default function ResetPasswordPage() {
               placeholder="Confirm password"
               required
               minLength={6}
-              className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-[#D7E2EA] placeholder:text-[#D7E2EA]/30 outline-none focus:border-white/30 transition-colors text-sm"
+              className="w-full bg-[var(--card-bg)] border border-[var(--border-subtle)] rounded-xl px-4 py-2.5 text-[var(--text-body)] placeholder:text-[var(--text-muted-30)] outline-none focus:border-[var(--text-muted-30)] transition-colors text-sm"
             />
             <button
               type="submit"

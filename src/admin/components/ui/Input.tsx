@@ -7,10 +7,10 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 
 const Input = forwardRef<HTMLInputElement, InputProps>(({ label, error, className = '', ...rest }, ref) => (
   <div className="w-full">
-    {label && <label className="block text-sm font-medium text-[#D7E2EA]/70 mb-1.5">{label}</label>}
+    {label && <label className="block text-sm font-medium text-[var(--text-muted-70)] mb-1.5">{label}</label>}
     <input
       ref={ref}
-      className={`w-full bg-white/5 border ${error ? 'border-red-500/50' : 'border-white/10'} rounded-xl px-4 py-2.5 text-[#D7E2EA] placeholder:text-[#D7E2EA]/30 outline-none focus:border-white/30 transition-colors text-sm ${className}`}
+      className={`w-full bg-[var(--card-bg)] border ${error ? 'border-red-500/50' : 'border-[var(--border-subtle)]'} rounded-xl px-4 py-2.5 text-[var(--text-body)] placeholder:text-[var(--text-muted-30)] outline-none focus:border-[var(--text-muted-30)] transition-colors text-sm ${className}`}
       {...rest}
     />
     {error && <p className="text-red-400 text-xs mt-1">{error}</p>}

@@ -1,7 +1,8 @@
 import { useState } from 'react'
-import { Outlet } from 'react-router-dom'
+import { Outlet, useLocation } from 'react-router-dom'
 import Sidebar from './Sidebar'
 import Topbar from './Topbar'
+import MobileNav from './MobileNav'
 
 const pageTitles: Record<string, string> = {
   '/admin': 'Dashboard',
@@ -23,18 +24,21 @@ const pageTitles: Record<string, string> = {
 
 export default function AdminLayout() {
   const [collapsed, setCollapsed] = useState(false)
-  const path = window.location.pathname
+  const path = useLocation().pathname
   const title = Object.entries(pageTitles).find(([key]) => path.startsWith(key))?.[1] || 'Admin'
 
   return (
-    <div className="flex h-screen bg-[#0C0C0C]">
-      <Sidebar collapsed={collapsed} onToggle={() => setCollapsed(!collapsed)} />
+    <div data-theme="dark" className="flex h-screen bg-[#0C0C0C]">
+      <div className="hidden lg:flex">
+        <Sidebar collapsed={collapsed} onToggle={() => setCollapsed(!collapsed)} />
+      </div>
       <div className="flex-1 flex flex-col overflow-hidden">
         <Topbar title={title} />
-        <main className="flex-1 overflow-y-auto p-6">
+        <main className="flex-1 overflow-y-auto p-4 md:p-6 pb-20 lg:pb-6">
           <Outlet />
         </main>
       </div>
+      <MobileNav />
     </div>
   )
 }

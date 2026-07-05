@@ -1,4 +1,4 @@
-interface PaginationProps {
+﻿interface PaginationProps {
   page: number
   totalPages: number
   onPageChange: (page: number) => void
@@ -11,7 +11,7 @@ export default function Pagination({ page, totalPages, onPageChange }: Paginatio
       <button
         onClick={() => onPageChange(page - 1)}
         disabled={page <= 1}
-        className="px-3 py-1.5 rounded-lg text-sm text-[#D7E2EA]/50 hover:text-[#D7E2EA] disabled:opacity-30 disabled:cursor-not-allowed bg-white/5 border border-white/10"
+        className="px-3 py-1.5 rounded-lg text-sm text-[var(--text-muted)] hover:text-[var(--text-body)] disabled:opacity-30 disabled:cursor-not-allowed bg-[var(--card-bg)] border border-[var(--border-subtle)]"
       >
         Prev
       </button>
@@ -20,7 +20,7 @@ export default function Pagination({ page, totalPages, onPageChange }: Paginatio
           key={p}
           onClick={() => onPageChange(p)}
           className={`w-8 h-8 rounded-lg text-sm font-medium transition-colors ${
-            p === page ? 'bg-white/15 text-[#D7E2EA]' : 'text-[#D7E2EA]/50 hover:text-[#D7E2EA] bg-white/5'
+            p === page ? 'bg-[var(--border-subtle)] text-[var(--text-body)]' : 'text-[var(--text-muted)] hover:text-[var(--text-body)] bg-[var(--card-bg)]'
           }`}
         >
           {p}
@@ -29,7 +29,7 @@ export default function Pagination({ page, totalPages, onPageChange }: Paginatio
       <button
         onClick={() => onPageChange(page + 1)}
         disabled={page >= totalPages}
-        className="px-3 py-1.5 rounded-lg text-sm text-[#D7E2EA]/50 hover:text-[#D7E2EA] disabled:opacity-30 disabled:cursor-not-allowed bg-white/5 border border-white/10"
+        className="px-3 py-1.5 rounded-lg text-sm text-[var(--text-muted)] hover:text-[var(--text-body)] disabled:opacity-30 disabled:cursor-not-allowed bg-[var(--card-bg)] border border-[var(--border-subtle)]"
       >
         Next
       </button>

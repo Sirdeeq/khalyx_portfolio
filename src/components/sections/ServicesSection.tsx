@@ -1,4 +1,4 @@
-import FadeIn from '../ui/FadeIn';
+﻿import FadeIn from '../ui/FadeIn';
 import { usePortfolioData } from '../../context/PortfolioDataContext';
 
 function padNum(i: number) { return String(i + 1).padStart(2, '0') }

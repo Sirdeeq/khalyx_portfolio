@@ -2,6 +2,8 @@ const mongoose = require('mongoose');
 
 const gallerySchema = new mongoose.Schema({
   src: { type: String, default: '' },
+  type: { type: String, enum: ['image', 'video'], default: 'image' },
+  thumbnail: { type: String, default: '' },
   label: { type: String, required: true, trim: true },
   aspect: { type: String, default: 'aspect-[3/4]' },
   order: { type: Number, default: 0 },

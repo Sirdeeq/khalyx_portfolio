@@ -13,7 +13,7 @@ export default function TechStackSection() {
   const [active, setActive] = useState(keys[0] || '')
 
   return (
-    <section id="tech-stack" className="bg-[#0C0C0C] px-5 sm:px-8 md:px-10 py-20 sm:py-24 md:py-32">
+    <section id="tech-stack" className="bg-[var(--bg-page)] px-5 sm:px-8 md:px-10 py-20 sm:py-24 md:py-32">
       <FadeIn y={40}>
         <h2
           className="hero-heading font-black uppercase leading-none tracking-tight text-center mb-16 sm:mb-20"
@@ -32,8 +32,8 @@ export default function TechStackSection() {
                 onClick={() => setActive(cat)}
                 className={`rounded-full px-6 py-2 border text-sm font-medium transition-all duration-300 ${
                   active === cat
-                    ? 'bg-[#D7E2EA] text-[#0C0C0C] border-[#D7E2EA]'
-                    : 'border-[#D7E2EA]/30 text-[#D7E2EA] hover:border-[#D7E2EA]/60'
+                    ? 'bg-[var(--text-body)] text-[var(--bg-page)] border-[var(--text-body)]'
+                    : 'border-[var(--text-muted-30)] text-[var(--text-body)] hover:border-[var(--text-muted-60)]'
                 }`}
               >
                 {cat}
@@ -45,7 +45,7 @@ export default function TechStackSection() {
         <div className="flex flex-wrap justify-center gap-3">
           {(categories[active] || []).map((skill, i) => (
             <FadeIn key={skill} delay={0.05 * i} y={10}>
-              <span className="inline-block border border-[#D7E2EA]/20 rounded-full px-4 py-1.5 text-sm text-[#D7E2EA]/80">
+              <span className="inline-block border border-[var(--text-muted-20)] rounded-full px-4 py-1.5 text-sm text-[var(--text-muted-80)]">
                 {skill}
               </span>
             </FadeIn>

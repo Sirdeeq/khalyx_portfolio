@@ -51,13 +51,13 @@ export default function AboutSection() {
             style={{ animation: 'marquee 120s linear infinite' }}
           >
             <span
-              className="text-[#D7E2EA] font-medium leading-relaxed flex-shrink-0"
+              className="text-[var(--text-body)] font-medium leading-relaxed flex-shrink-0"
               style={{ fontSize: 'clamp(1rem, 2vw, 1.35rem)', paddingRight: '4rem' }}
             >
               {about.bio}
             </span>
             <span
-              className="text-[#D7E2EA] font-medium leading-relaxed flex-shrink-0"
+              className="text-[var(--text-body)] font-medium leading-relaxed flex-shrink-0"
               style={{ fontSize: 'clamp(1rem, 2vw, 1.35rem)' }}
             >
               {about.bio}
@@ -67,7 +67,7 @@ export default function AboutSection() {
 
         <FadeIn delay={0.2} y={20} className="w-full max-w-2xl mx-auto mt-6 sm:mt-8">
           <p
-            className="text-[#D7E2EA] font-light text-center leading-relaxed"
+            className="text-[var(--text-body)] font-light text-center leading-relaxed"
             style={{ fontSize: 'clamp(0.85rem, 1.6vw, 1.15rem)' }}
           >
             {about.passion}
@@ -79,7 +79,7 @@ export default function AboutSection() {
             {about.values.map((value) => (
               <span
                 key={value}
-                className="rounded-full border border-[#D7E2EA]/30 text-[#D7E2EA] px-5 py-2 text-sm font-medium"
+                className="rounded-full border border-[var(--text-muted-30)] text-[var(--text-body)] px-5 py-2 text-sm font-medium"
               >
                 {value}
               </span>

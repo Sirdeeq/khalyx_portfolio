@@ -15,6 +15,8 @@ export interface Project {
 
 export interface GalleryItem {
   src: string
+  type: 'image' | 'video'
+  thumbnail: string
   label: string
   aspect: string
 }
@@ -52,15 +54,15 @@ const defaults: SiteData = {
     { num: '04', name: 'GAMSAJ International Ltd', category: 'Construction & Engineering', features: 'Building construction \u2022 Civil engineering \u2022 Real estate \u2022 Project management \u2022 Industrial construction', role: 'Lead Developer', url: 'https://gamsaj.com', col1_img1: '', col1_img2: '', col2_img: '' },
   ],
   gallery: [
-    { src: '', label: 'Behind-the-scenes', aspect: 'aspect-[3/4]' },
-    { src: '', label: 'Event coverage', aspect: 'aspect-[4/3]' },
-    { src: '', label: 'Professional portrait', aspect: 'aspect-[3/4]' },
-    { src: '', label: 'Design work', aspect: 'aspect-[4/5]' },
-    { src: '', label: 'Coding sessions', aspect: 'aspect-[3/4]' },
-    { src: '', label: 'Team / Event', aspect: 'aspect-[4/3]' },
-    { src: '', label: 'Professional', aspect: 'aspect-[3/4]' },
-    { src: '', label: 'Design showcase', aspect: 'aspect-[4/5]' },
-    { src: '', label: 'Coding / Workspace', aspect: 'aspect-[3/4]' },
+    { src: '', type: 'image', thumbnail: '', label: 'Behind-the-scenes', aspect: 'aspect-[3/4]' },
+    { src: '', type: 'image', thumbnail: '', label: 'Event coverage', aspect: 'aspect-[4/3]' },
+    { src: '', type: 'image', thumbnail: '', label: 'Professional portrait', aspect: 'aspect-[3/4]' },
+    { src: '', type: 'image', thumbnail: '', label: 'Design work', aspect: 'aspect-[4/5]' },
+    { src: '', type: 'image', thumbnail: '', label: 'Coding sessions', aspect: 'aspect-[3/4]' },
+    { src: '', type: 'image', thumbnail: '', label: 'Team / Event', aspect: 'aspect-[4/3]' },
+    { src: '', type: 'image', thumbnail: '', label: 'Professional', aspect: 'aspect-[3/4]' },
+    { src: '', type: 'image', thumbnail: '', label: 'Design showcase', aspect: 'aspect-[4/5]' },
+    { src: '', type: 'image', thumbnail: '', label: 'Coding / Workspace', aspect: 'aspect-[3/4]' },
   ],
   techStack: [
     { category: 'Frontend', items: ['React', 'TypeScript', 'Next.js', 'Tailwind CSS', 'Framer Motion'] },

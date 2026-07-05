@@ -1,4 +1,4 @@
-import FadeIn from '../ui/FadeIn'
+﻿import FadeIn from '../ui/FadeIn'
 import TypewriterHeading from '../ui/TypewriterHeading'
 import Magnet from '../ui/Magnet'
 import { usePortfolioData } from '../../context/PortfolioDataContext'
@@ -32,14 +32,14 @@ export default function HeroSection() {
         </FadeIn>
 
         <FadeIn delay={0.2} y={20}>
-          <p className="text-[#D7E2EA] font-medium text-center mt-2 text-sm sm:text-base md:text-lg">
+          <p className="text-[var(--text-body)] font-medium text-center mt-2 text-sm sm:text-base md:text-lg">
             Sadiq Baba Idris
           </p>
         </FadeIn>
 
         <FadeIn delay={0.25} y={20}>
           <p
-            className="text-[#D7E2EA]/60 font-light uppercase tracking-wide text-center max-w-4xl mx-auto mt-4"
+            className="text-[var(--text-body)]/60 font-light uppercase tracking-wide text-center max-w-4xl mx-auto mt-4"
             style={{ fontSize: 'clamp(0.6rem, 1vw, 0.9rem)' }}
           >
             {hero.roles.join(' \u2022 ')}
@@ -48,7 +48,7 @@ export default function HeroSection() {
 
         <FadeIn delay={0.35} y={20} className="mt-6 sm:mt-8">
           <p
-            className="text-[#D7E2EA] font-light text-center leading-relaxed max-w-2xl mx-auto"
+            className="text-[var(--text-body)] font-light text-center leading-relaxed max-w-2xl mx-auto"
             style={{ fontSize: 'clamp(0.8rem, 1.4vw, 1.1rem)' }}
           >
             {hero.tagline}
@@ -75,7 +75,7 @@ export default function HeroSection() {
             <a
               href="/Sadiq_Baba_Idris_Portfolio.docx"
               download
-              className="rounded-full font-medium uppercase tracking-widest text-[#D7E2EA] px-8 py-3 sm:px-10 sm:py-3.5 md:px-12 md:py-4 text-xs sm:text-sm md:text-base border-2 border-[#D7E2EA] hover:bg-[#D7E2EA]/10 transition-colors duration-200 inline-block"
+              className="rounded-full font-medium uppercase tracking-widest text-[var(--text-body)] px-8 py-3 sm:px-10 sm:py-3.5 md:px-12 md:py-4 text-xs sm:text-sm md:text-base border-2 border-[var(--text-body)] hover:bg-[var(--text-body)]/10 transition-colors duration-200 inline-block"
             >
               Download CV
             </a>

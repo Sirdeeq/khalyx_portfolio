@@ -21,7 +21,7 @@ export interface PortfolioData {
     _id?: string; num: string; name: string; category: string; features: string; role: string; url?: string
     col1_img1: string; col1_img2: string; col2_img: string
   }>
-  gallery: Array<{ _id?: string; src: string; label: string; aspect: string }>
+  gallery: Array<{ _id?: string; src: string; type: 'image' | 'video'; thumbnail: string; label: string; aspect: string }>
   techStack: Array<{ category: string; items: string[] }>
   services: Array<{ name: string; description: string; icon: string }>
   media: { title: string; timeline: Array<{ title: string; period: string; detail: string }>; services: string[] }
@@ -36,7 +36,7 @@ const defaultData: PortfolioData = {
   hero: defaults.hero,
   about: defaults.about,
   projects: defaults.projects.map(p => ({ ...p, col1_img1: p.col1_img1 || '', col1_img2: p.col1_img2 || '', col2_img: p.col2_img || '' })),
-  gallery: defaults.gallery.map(g => ({ ...g, src: g.src || '' })),
+  gallery: defaults.gallery.map(g => ({ ...g, src: g.src || '', type: (g as any).type || 'image', thumbnail: (g as any).thumbnail || '' })),
   techStack: defaults.techStack,
   services: defaults.services.map(s => ({ name: s, description: '', icon: '' })),
   media: defaults.media,
@@ -88,7 +88,7 @@ export function PortfolioDataProvider({ children }: { children: React.ReactNode 
       col1_img1: p.col1_img1 || '', col1_img2: p.col1_img2 || '', col2_img: p.col2_img || '',
     })) : defaultData.projects,
     gallery: galleryRaw?.data?.length ? galleryRaw.data.map(g => ({
-      _id: g._id, src: g.src || '', label: g.label, aspect: g.aspect,
+      _id: g._id, src: g.src || '', type: g.type || 'image', thumbnail: g.thumbnail || '', label: g.label, aspect: g.aspect,
     })) : defaultData.gallery,
     techStack: Array.isArray(techRaw?.data) && techRaw.data.length ? techRaw.data : defaultData.techStack,
     services: Array.isArray(servicesRaw?.data) && servicesRaw.data.length ? servicesRaw.data.map((s: any) => ({ name: s.name, description: s.description, icon: s.icon })) : defaultData.services,

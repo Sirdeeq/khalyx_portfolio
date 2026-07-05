@@ -4,6 +4,55 @@
 @tailwind components;
 @tailwind utilities;
 
+:root,
+[data-theme='dark'] {
+  --bg-page: #0C0C0C;
+  --text-body: #D7E2EA;
+  --text-muted: rgba(215, 226, 234, 0.65);
+  --text-muted-40: rgba(215, 226, 234, 0.55);
+  --text-muted-60: rgba(215, 226, 234, 0.75);
+  --text-muted-70: rgba(215, 226, 234, 0.8);
+  --text-muted-80: rgba(215, 226, 234, 0.88);
+  --text-muted-30: rgba(215, 226, 234, 0.45);
+  --text-muted-20: rgba(215, 226, 234, 0.3);
+  --border-subtle: rgba(255, 255, 255, 0.1);
+  --border-subtle-5: rgba(255, 255, 255, 0.05);
+  --overlay-light: rgba(255, 255, 255, 0.05);
+  --section-alt-bg: #ffffff;
+  --section-alt-text: #0C0C0C;
+  --nav-bg: rgba(12, 12, 12, 0.8);
+  --footer-bg: #0C0C0C;
+  --text-on-white: #0C0C0C;
+  --bg-overlay: rgba(0, 0, 0, 0.6);
+  --hero-gradient: linear-gradient(180deg, #646973 0%, #bbccd7 100%);
+  --card-bg: rgba(255, 255, 255, 0.05);
+  --icon-bg: rgba(215, 226, 234, 0.1);
+}
+
+[data-theme='light'] {
+  --bg-page: #f0f0f2;
+  --text-body: #1a1a2e;
+  --text-muted: rgba(26, 26, 46, 0.5);
+  --text-muted-40: rgba(26, 26, 46, 0.4);
+  --text-muted-60: rgba(26, 26, 46, 0.6);
+  --text-muted-70: rgba(26, 26, 46, 0.7);
+  --text-muted-80: rgba(26, 26, 46, 0.8);
+  --text-muted-30: rgba(26, 26, 46, 0.3);
+  --text-muted-20: rgba(26, 26, 46, 0.2);
+  --border-subtle: rgba(0, 0, 0, 0.08);
+  --border-subtle-5: rgba(0, 0, 0, 0.05);
+  --overlay-light: rgba(0, 0, 0, 0.03);
+  --section-alt-bg: #ffffff;
+  --section-alt-text: #0C0C0C;
+  --nav-bg: rgba(240, 240, 242, 0.85);
+  --footer-bg: #ffffff;
+  --text-on-white: #0C0C0C;
+  --bg-overlay: rgba(0, 0, 0, 0.6);
+  --hero-gradient: linear-gradient(180deg, #646973 0%, #bbccd7 100%);
+  --card-bg: rgba(0, 0, 0, 0.03);
+  --icon-bg: rgba(26, 26, 46, 0.08);
+}
+
 *,
 *::before,
 *::after {
@@ -15,18 +64,22 @@
 html,
 body,
 #root {
-  background: #0C0C0C;
+  background: var(--bg-page);
   font-family: 'Kanit', sans-serif;
 }
 
 .hero-heading {
-  background: linear-gradient(180deg, #646973 0%, #BBCCD7 100%);
+  background: var(--hero-gradient);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
 @keyframes marquee {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
 }

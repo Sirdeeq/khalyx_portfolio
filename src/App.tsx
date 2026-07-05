@@ -1,4 +1,6 @@
+import { useEffect } from 'react'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { useThemeStore } from './lib/store/themeStore'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import ProtectedRoute from './admin/components/guards/ProtectedRoute'
 import AdminLayout from './admin/components/layout/AdminLayout'
@@ -44,9 +46,18 @@ const queryClient = new QueryClient({
   },
 })
 
+function ThemeSync() {
+  const theme = useThemeStore((s) => s.theme)
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme
+  }, [theme])
+  return null
+}
+
 export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
+      <ThemeSync />
       <BrowserRouter>
         <ToastProvider />
         <Routes>

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import ThemeToggle from '../ui/ThemeToggle';
 
 const navLinks = [
   { label: 'Home', href: '#home' },
@@ -44,7 +45,7 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-[#0C0C0C]/80 backdrop-blur-xl border-b border-white/10">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-[var(--nav-bg)] backdrop-blur-xl border-b border-[var(--border-subtle)]">
       <div className="flex items-center justify-between px-6 md:px-10 h-16">
         <button
           onClick={() => scrollTo('#home')}
@@ -60,29 +61,35 @@ export default function Navbar() {
               onClick={() => scrollTo(link.href)}
               className={`text-sm uppercase tracking-wider font-medium transition-colors duration-200 ${
                 active === link.href.replace('#', '')
-                  ? 'text-[#D7E2EA]'
-                  : 'text-[#D7E2EA]/50 hover:text-[#D7E2EA]/80'
+                  ? 'text-[var(--text-body)]'
+                  : 'text-[var(--text-muted)] hover:text-[var(--text-muted-70)]'
               }`}
             >
               {link.label}
             </button>
           ))}
+          <ThemeToggle />
         </div>
 
-        <button
+        <div className="flex items-center gap-2">
+          <div className="md:hidden">
+            <ThemeToggle />
+          </div>
+          <button
           onClick={() => setMenuOpen(!menuOpen)}
           className="md:hidden flex flex-col gap-1.5 p-2"
           aria-label="Toggle menu"
         >
-          <span className={`block h-0.5 w-6 bg-[#D7E2EA] transition-transform duration-200 ${menuOpen ? 'rotate-45 translate-y-2' : ''}`} />
-          <span className={`block h-0.5 w-6 bg-[#D7E2EA] transition-opacity duration-200 ${menuOpen ? 'opacity-0' : ''}`} />
-          <span className={`block h-0.5 w-6 bg-[#D7E2EA] transition-transform duration-200 ${menuOpen ? '-rotate-45 -translate-y-2' : ''}`} />
+          <span className={`block h-0.5 w-6 bg-[var(--text-body)] transition-transform duration-200 ${menuOpen ? 'rotate-45 translate-y-2' : ''}`} />
+          <span className={`block h-0.5 w-6 bg-[var(--text-body)] transition-opacity duration-200 ${menuOpen ? 'opacity-0' : ''}`} />
+          <span className={`block h-0.5 w-6 bg-[var(--text-body)] transition-transform duration-200 ${menuOpen ? '-rotate-45 -translate-y-2' : ''}`} />
         </button>
+      </div>
       </div>
 
       <div
         className={`md:hidden overflow-hidden transition-all duration-300 ${
-          menuOpen ? 'max-h-96 border-t border-white/10' : 'max-h-0'
+          menuOpen ? 'max-h-96 border-t border-[var(--border-subtle)]' : 'max-h-0'
         }`}
       >
         <div className="flex flex-col px-6 py-4 gap-3">
@@ -92,8 +99,8 @@ export default function Navbar() {
               onClick={() => scrollTo(link.href)}
               className={`text-sm uppercase tracking-wider font-medium text-left py-2 transition-colors duration-200 ${
                 active === link.href.replace('#', '')
-                  ? 'text-[#D7E2EA]'
-                  : 'text-[#D7E2EA]/50 hover:text-[#D7E2EA]/80'
+                  ? 'text-[var(--text-body)]'
+                  : 'text-[var(--text-muted)] hover:text-[var(--text-muted-70)]'
               }`}
             >
               {link.label}

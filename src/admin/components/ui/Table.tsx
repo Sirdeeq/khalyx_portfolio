@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react'
+﻿import type { ReactNode } from 'react'
 
 interface Column<T> {
   key: string
@@ -19,9 +19,9 @@ export default function Table<T extends Record<string, unknown>>({ columns, data
     <div className="overflow-x-auto">
       <table className="w-full text-sm">
         <thead>
-          <tr className="border-b border-white/10">
+          <tr className="border-b border-[var(--border-subtle)]">
             {columns.map((col) => (
-              <th key={col.key} className={`text-left text-[#D7E2EA]/50 font-medium uppercase tracking-wider text-xs py-3 px-4 ${col.className || ''}`}>
+              <th key={col.key} className={`text-left text-[var(--text-muted)] font-medium uppercase tracking-wider text-xs py-3 px-4 ${col.className || ''}`}>
                 {col.header}
               </th>
             ))}
@@ -30,11 +30,11 @@ export default function Table<T extends Record<string, unknown>>({ columns, data
         <tbody>
           {loading ? (
             <tr>
-              <td colSpan={columns.length} className="text-center py-12 text-[#D7E2EA]/30">Loading...</td>
+              <td colSpan={columns.length} className="text-center py-12 text-[var(--text-muted-30)]">Loading...</td>
             </tr>
           ) : data.length === 0 ? (
             <tr>
-              <td colSpan={columns.length} className="text-center py-12 text-[#D7E2EA]/30">No data found</td>
+              <td colSpan={columns.length} className="text-center py-12 text-[var(--text-muted-30)]">No data found</td>
             </tr>
           ) : (
             data.map((item, i) => (
@@ -44,7 +44,7 @@ export default function Table<T extends Record<string, unknown>>({ columns, data
                 className={`border-b border-white/5 hover:bg-white/[0.02] transition-colors ${onRowClick ? 'cursor-pointer' : ''}`}
               >
                 {columns.map((col) => (
-                  <td key={col.key} className={`py-3 px-4 text-[#D7E2EA] ${col.className || ''}`}>
+                  <td key={col.key} className={`py-3 px-4 text-[var(--text-body)] ${col.className || ''}`}>
                     {col.render ? col.render(item) : (item[col.key] as ReactNode) ?? '-'}
                   </td>
                 ))}

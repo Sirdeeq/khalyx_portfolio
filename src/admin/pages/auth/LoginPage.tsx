@@ -30,27 +30,27 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#0C0C0C] flex items-center justify-center p-4">
+    <div className="min-h-screen bg-[var(--bg-page)] flex items-center justify-center p-4">
       <div className="w-full max-w-sm">
-        <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8">
+        <div className="bg-[var(--card-bg)] backdrop-blur-xl border border-[var(--border-subtle)] rounded-2xl p-8">
           <div className="text-center mb-8">
-            <h1 className="text-2xl font-bold text-[#D7E2EA]">Admin Login</h1>
-            <p className="text-[#D7E2EA]/50 text-sm mt-1">Sign in to manage your portfolio</p>
+            <h1 className="text-2xl font-bold text-[var(--text-body)]">Admin Login</h1>
+            <p className="text-[var(--text-muted)] text-sm mt-1">Sign in to manage your portfolio</p>
           </div>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-[#D7E2EA]/70 mb-1.5">Email</label>
+              <label className="block text-sm font-medium text-[var(--text-muted-70)] mb-1.5">Email</label>
               <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="admin@example.com"
                 required
-                className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-[#D7E2EA] placeholder:text-[#D7E2EA]/30 outline-none focus:border-white/30 transition-colors text-sm"
+                className="w-full bg-[var(--card-bg)] border border-[var(--border-subtle)] rounded-xl px-4 py-2.5 text-[var(--text-body)] placeholder:text-[var(--text-muted-30)] outline-none focus:border-[var(--text-muted-30)] transition-colors text-sm"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-[#D7E2EA]/70 mb-1.5">Password</label>
+              <label className="block text-sm font-medium text-[var(--text-muted-70)] mb-1.5">Password</label>
               <input
                 type="password"
                 value={password}
@@ -58,7 +58,7 @@ export default function LoginPage() {
                 placeholder="••••••••"
                 required
                 minLength={6}
-                className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-[#D7E2EA] placeholder:text-[#D7E2EA]/30 outline-none focus:border-white/30 transition-colors text-sm"
+                className="w-full bg-[var(--card-bg)] border border-[var(--border-subtle)] rounded-xl px-4 py-2.5 text-[var(--text-body)] placeholder:text-[var(--text-muted-30)] outline-none focus:border-[var(--text-muted-30)] transition-colors text-sm"
               />
             </div>
             <button
@@ -73,17 +73,17 @@ export default function LoginPage() {
             </button>
           </form>
           <div className="mt-4 text-center">
-            <Link to="/forgot-password" className="text-xs text-[#D7E2EA]/40 hover:text-[#D7E2EA]/60 transition-colors">
+            <Link to="/forgot-password" className="text-xs text-[var(--text-muted-40)] hover:text-[var(--text-muted-60)] transition-colors">
               Forgot password?
             </Link>
           </div>
           <div className="mt-6 text-center">
-            <Link to="/" className="text-xs text-[#D7E2EA]/30 hover:text-[#D7E2EA]/50 transition-colors">
+            <Link to="/" className="text-xs text-[var(--text-muted-30)] hover:text-[var(--text-muted)] transition-colors">
               ← Back to Portfolio
             </Link>
           </div>
         </div>
-        <p className="text-center text-[#D7E2EA]/20 text-xs mt-4">Default: admin@example.com / admin123</p>
+        <p className="text-center text-[var(--text-muted-20)] text-xs mt-4">Default: admin@example.com / admin123</p>
       </div>
     </div>
   )

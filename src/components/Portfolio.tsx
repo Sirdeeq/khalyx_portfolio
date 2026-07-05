@@ -1,4 +1,4 @@
-import { AdminProvider } from '../context/AdminContext'
+﻿import { AdminProvider } from '../context/AdminContext'
 import { PortfolioDataProvider } from '../context/PortfolioDataContext'
 import Navbar from './layout/Navbar'
 import ParticleBackground from './layout/ParticleBackground'
@@ -43,12 +43,12 @@ function PortfolioContent() {
         <FutureProjectsSection />
         <ContactSection />
 
-        <footer className="bg-[#0C0C0C] border-t border-white/10 px-5 py-8">
+        <footer className="bg-[var(--bg-page)] border-t border-[var(--border-subtle)] px-5 py-8">
           <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-            <p className="text-[#D7E2EA]/30 text-xs">&copy; {new Date().getFullYear()} Sadiq Baba Idris. All rights reserved.</p>
+            <p className="text-[var(--text-muted-30)] text-xs">&copy; {new Date().getFullYear()} Sadiq Baba Idris. All rights reserved.</p>
             <Link
               to="/login"
-              className="text-[#D7E2EA]/20 text-xs hover:text-[#D7E2EA]/50 transition-colors"
+              className="text-[var(--text-muted-20)] text-xs hover:text-[var(--text-muted)] transition-colors"
             >
               Admin
             </Link>

@@ -1,4 +1,4 @@
-import FadeIn from '../ui/FadeIn'
+﻿import FadeIn from '../ui/FadeIn'
 
 const education = [
   {
@@ -60,7 +60,7 @@ const training = [
 
 export default function EducationSection() {
   return (
-    <section className="bg-[#0C0C0C] px-5 sm:px-8 md:px-10 py-20 sm:py-24 md:py-32">
+    <section className="bg-[var(--bg-page)] px-5 sm:px-8 md:px-10 py-20 sm:py-24 md:py-32">
       <FadeIn y={40}>
         <h2
           className="hero-heading font-black uppercase leading-none tracking-tight text-center mb-16 sm:mb-20"
@@ -73,7 +73,7 @@ export default function EducationSection() {
       {/* Education Timeline */}
       <div className="max-w-4xl mx-auto mb-20">
         <FadeIn y={20} delay={0.05}>
-          <p className="text-[#D7E2EA]/60 text-center max-w-2xl mx-auto mb-12 leading-relaxed" style={{ fontSize: 'clamp(0.85rem, 1.3vw, 1.05rem)' }}>
+          <p className="text-[var(--text-muted-60)] text-center max-w-2xl mx-auto mb-12 leading-relaxed" style={{ fontSize: 'clamp(0.85rem, 1.3vw, 1.05rem)' }}>
             My educational journey has provided me with a strong foundation in both academics and
             technology, shaping my passion for software development, digital media, and community
             leadership.
@@ -84,24 +84,19 @@ export default function EducationSection() {
           <div className="absolute left-[19px] top-0 bottom-0 w-px bg-white/10 hidden sm:block" />
 
           {education.map((item, i) => (
-            <FadeIn key={`edu-${i}`} delay={0.05 * i} y={20}>
+            <FadeIn key={item.title} delay={0.05 * i} y={20}>
               <div className="flex items-start gap-5 sm:gap-8 mb-6">
-                <div
-                  className={`flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center text-xs font-bold z-10 ${
-                    item.type === 'degree'
-                      ? 'bg-[#D7E2EA] text-[#0C0C0C]'
-                      : 'bg-white/10 text-[#D7E2EA]'
-                  }`}
+                <div className="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center text-xs font-bold z-10"
                 >
                   {item.type === 'degree' ? 'D' : 'S'}
                 </div>
-                <div className="bg-white/5 backdrop-blur-xl rounded-2xl border border-white/10 p-5 flex-1 hover:border-white/20 transition-all duration-300">
-                  <h3 className="text-lg sm:text-xl font-bold text-[#D7E2EA]">{item.title}</h3>
-                  <p className="text-[#D7E2EA]/70 text-sm mt-1">{item.org}</p>
-                  <span className="inline-block text-[#D7E2EA]/40 text-xs mt-2 font-medium">
+                <div className="bg-[var(--card-bg)] backdrop-blur-xl rounded-2xl border border-[var(--border-subtle)] p-5 flex-1 hover:border-[var(--border-subtle)] transition-all duration-300">
+                  <h3 className="text-lg sm:text-xl font-bold text-[var(--text-body)]">{item.title}</h3>
+                  <p className="text-[var(--text-muted-70)] text-sm mt-1">{item.org}</p>
+                  <span className="inline-block text-[var(--text-muted-40)] text-xs mt-2 font-medium">
                     {item.period}
                   </span>
-                  <p className="text-[#D7E2EA]/60 text-sm mt-3 leading-relaxed border-t border-white/10 pt-3">
+                  <p className="text-[var(--text-muted-60)] text-sm mt-3 leading-relaxed border-t border-[var(--border-subtle)] pt-3">
                     {item.description}
                   </p>
                 </div>
@@ -114,8 +109,8 @@ export default function EducationSection() {
       {/* Professional Training */}
       <div className="max-w-4xl mx-auto">
         <FadeIn y={20} delay={0.1}>
-          <h3 className="text-2xl sm:text-3xl font-bold text-[#D7E2EA] mb-2 text-center">Professional Training</h3>
-          <p className="text-[#D7E2EA]/60 text-center max-w-2xl mx-auto mb-12 leading-relaxed text-sm">
+          <h3 className="text-2xl sm:text-3xl font-bold text-[var(--text-body)] mb-2 text-center">Professional Training</h3>
+          <p className="text-[var(--text-muted-60)] text-center max-w-2xl mx-auto mb-12 leading-relaxed text-sm">
             Although my experience has largely been built through hands-on work and community service,
             I have also participated in specialized training programs that strengthened my knowledge
             in healthcare advocacy and community engagement.
@@ -124,15 +119,15 @@ export default function EducationSection() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {training.map((item, i) => (
-            <FadeIn key={`train-${i}`} delay={0.1 * i} y={20}>
-              <div className="bg-white/5 backdrop-blur-xl rounded-2xl border border-white/10 p-6 h-full hover:border-white/20 transition-all duration-300">
+            <FadeIn key={item.title} delay={0.1 * i} y={20}>
+              <div className="bg-[var(--card-bg)] backdrop-blur-xl rounded-2xl border border-[var(--border-subtle)] p-6 h-full hover:border-[var(--border-subtle)] transition-all duration-300">
                 <div className="flex items-center gap-3 mb-3">
-                  <h4 className="text-lg font-bold text-[#D7E2EA]">{item.title}</h4>
-                  <span className="text-xs text-[#D7E2EA]/40 border border-white/10 rounded-full px-3 py-0.5 flex-shrink-0">
+                  <h4 className="text-lg font-bold text-[var(--text-body)]">{item.title}</h4>
+                  <span className="text-xs text-[var(--text-muted-40)] border border-[var(--border-subtle)] rounded-full px-3 py-0.5 flex-shrink-0">
                     {item.period}
                   </span>
                 </div>
-                <p className="text-[#D7E2EA]/60 text-sm leading-relaxed">{item.description}</p>
+                <p className="text-[var(--text-muted-60)] text-sm leading-relaxed">{item.description}</p>
               </div>
             </FadeIn>
           ))}

@@ -22,9 +22,9 @@ export default function DashboardPage() {
     <div>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
         {stats.map((s) => (
-          <div key={s.label} className={`bg-white/5 backdrop-blur-xl rounded-xl border-l-4 ${s.color} border border-white/10 p-5`}>
-            <p className="text-[#D7E2EA]/50 text-xs uppercase tracking-wider mb-1">{s.label}</p>
-            <p className="text-3xl font-bold text-[#D7E2EA]">{s.value}</p>
+          <div key={s.label} className={`bg-[var(--card-bg)] backdrop-blur-xl rounded-xl border-l-4 ${s.color} border border-[var(--border-subtle)] p-5`}>
+            <p className="text-[var(--text-muted)] text-xs uppercase tracking-wider mb-1">{s.label}</p>
+            <p className="text-3xl font-bold text-[var(--text-body)]">{s.value}</p>
           </div>
         ))}
       </div>
@@ -40,7 +40,7 @@ export default function DashboardPage() {
               <a
                 key={action.label}
                 href={action.to}
-                className="block px-4 py-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-[#D7E2EA] text-sm transition-colors"
+                className="block px-4 py-3 rounded-xl bg-[var(--card-bg)] hover:bg-[var(--border-subtle)] border border-[var(--border-subtle)] text-[var(--text-body)] text-sm transition-colors"
               >
                 {action.label}
               </a>
@@ -54,12 +54,12 @@ export default function DashboardPage() {
               <div key={msg._id} className="flex items-start gap-3 text-sm">
                 <div className={`w-2 h-2 rounded-full mt-1.5 flex-shrink-0 ${msg.isRead ? 'bg-green-500/50' : 'bg-yellow-500'}`} />
                 <div className="min-w-0">
-                  <p className="text-[#D7E2EA] truncate">{msg.name}</p>
-                  <p className="text-[#D7E2EA]/40 text-xs truncate">{msg.message}</p>
+                  <p className="text-[var(--text-body)] truncate">{msg.name}</p>
+                  <p className="text-[var(--text-muted-40)] text-xs truncate">{msg.message}</p>
                 </div>
               </div>
             ))}
-            {contacts?.data?.length === 0 && <p className="text-[#D7E2EA]/30 text-sm">No messages yet</p>}
+            {contacts?.data?.length === 0 && <p className="text-[var(--text-muted-30)] text-sm">No messages yet</p>}
           </div>
         </Card>
       </div>

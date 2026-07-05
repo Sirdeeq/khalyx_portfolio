@@ -38,6 +38,8 @@ export interface ProjectData {
 export interface GalleryData {
   _id: string
   src: string
+  type: 'image' | 'video'
+  thumbnail: string
   label: string
   aspect: string
   order: number

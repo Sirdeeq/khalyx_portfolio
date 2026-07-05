@@ -26,15 +26,15 @@ interface SidebarProps {
 export default function Sidebar({ collapsed, onToggle }: SidebarProps) {
   return (
     <aside
-      className={`bg-[#0C0C0C] border-r border-white/10 flex flex-col flex-shrink-0 transition-all duration-300 ${
+      className={`bg-[var(--bg-page)] border-r border-[var(--border-subtle)] flex flex-col flex-shrink-0 transition-all duration-300 ${
         collapsed ? 'w-16' : 'w-56'
       }`}
     >
-      <div className="flex items-center justify-between h-16 px-4 border-b border-white/10">
-        {!collapsed && <span className="text-lg font-bold text-[#D7E2EA]">Portfolio</span>}
+      <div className="flex items-center justify-between h-16 px-4 border-b border-[var(--border-subtle)]">
+        {!collapsed && <span className="text-lg font-bold text-[var(--text-body)]">Portfolio</span>}
         <button
           onClick={onToggle}
-          className="text-[#D7E2EA]/40 hover:text-[#D7E2EA] transition-colors text-lg mx-auto"
+          className="text-[var(--text-muted)] hover:text-[var(--text-body)] transition-colors text-lg mx-auto"
         >
           {collapsed ? '☰' : '✕'}
         </button>
@@ -49,8 +49,8 @@ export default function Sidebar({ collapsed, onToggle }: SidebarProps) {
             className={({ isActive }) =>
               `flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-all duration-200 ${
                 isActive
-                  ? 'bg-white/10 text-[#D7E2EA] font-medium'
-                  : 'text-[#D7E2EA]/50 hover:text-[#D7E2EA]/80 hover:bg-white/5'
+                  ? 'bg-[var(--card-bg)] text-[var(--text-body)] font-medium'
+                  : 'text-[var(--text-muted)] hover:text-[var(--text-body)] hover:bg-[var(--card-bg)]'
               } ${collapsed ? 'justify-center' : ''}`
             }
           >

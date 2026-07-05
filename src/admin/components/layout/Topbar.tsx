@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom'
+﻿import { useNavigate } from 'react-router-dom'
 import { useAuthStore } from '../../../lib/store/authStore'
 
 interface TopbarProps {
@@ -15,15 +15,13 @@ export default function Topbar({ title }: TopbarProps) {
   }
 
   return (
-    <header className="h-16 border-b border-white/10 flex items-center justify-between px-6 bg-[#0C0C0C]">
-      <div>
-        <h1 className="text-lg font-bold text-[#D7E2EA]">{title}</h1>
-      </div>
-      <div className="flex items-center gap-4">
-        <span className="text-sm text-[#D7E2EA]/50">{user?.email}</span>
+    <header className="h-14 lg:h-16 border-b border-[var(--border-subtle)] flex items-center justify-between px-4 lg:px-6 bg-[var(--bg-page)]">
+      <h1 className="text-base lg:text-lg font-bold text-[var(--text-body)] truncate">{title}</h1>
+      <div className="flex items-center gap-3">
+        <span className="hidden lg:block text-sm text-[var(--text-muted)] truncate max-w-[180px]">{user?.email}</span>
         <button
           onClick={handleLogout}
-          className="text-xs text-red-400/70 hover:text-red-400 transition-colors uppercase tracking-wider font-medium"
+          className="text-xs text-red-400/70 hover:text-red-400 transition-colors uppercase tracking-wider font-medium shrink-0"
         >
           Logout
         </button>

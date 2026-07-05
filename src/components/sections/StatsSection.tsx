@@ -1,4 +1,4 @@
-import FadeIn from '../ui/FadeIn'
+﻿import FadeIn from '../ui/FadeIn'
 import StatsCounter from '../ui/StatsCounter'
 
 const stats = [
@@ -13,7 +13,7 @@ const stats = [
 
 export default function StatsSection() {
   return (
-    <section className="bg-[#0C0C0C] px-5 sm:px-8 md:px-10 py-20 sm:py-24 md:py-32 relative overflow-hidden">
+    <section className="bg-[var(--bg-page)] px-5 sm:px-8 md:px-10 py-20 sm:py-24 md:py-32 relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-white/[0.02] to-transparent pointer-events-none" />
 
       <div className="max-w-6xl mx-auto relative z-10">

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+﻿import { useEffect, useRef, useState } from 'react';
 
 const gifImages = [
   'https://motionsites.ai/assets/hero-space-voyage-preview-eECLH3Yc.gif',
@@ -46,10 +46,10 @@ export default function MarqueeSection() {
   const row2 = gifImages.slice(11, 21);
 
   return (
-    <section id="media" ref={sectionRef} className="bg-[#0C0C0C] pt-24 sm:pt-32 md:pt-40 pb-10 overflow-hidden">
+    <section id="media" ref={sectionRef} className="bg-[var(--bg-page)] pt-24 sm:pt-32 md:pt-40 pb-10 overflow-hidden">
       <div
         className="flex gap-3 mb-3"
-        style={{ transform: `translateX(${offset - 200}px)`, willChange: 'transform' }}
+        style={{ transform: `translateX(${offset}px)`, willChange: 'transform' }}
       >
         {[...row1, ...row1, ...row1].map((src, i) => (
           <img
@@ -63,7 +63,7 @@ export default function MarqueeSection() {
       </div>
       <div
         className="flex gap-3"
-        style={{ transform: `translateX(${-(offset - 200)}px)`, willChange: 'transform' }}
+        style={{ transform: `translateX(${offset * -1}px)`, willChange: 'transform' }}
       >
         {[...row2, ...row2, ...row2].map((src, i) => (
           <img

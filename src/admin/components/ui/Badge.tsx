@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react'
+﻿import type { ReactNode } from 'react'
 
 interface BadgeProps {
   children: ReactNode
@@ -6,7 +6,7 @@ interface BadgeProps {
 }
 
 const colors = {
-  default: 'bg-white/10 text-[#D7E2EA]/70',
+  default: 'bg-[var(--card-bg)] text-[var(--text-muted-70)]',
   success: 'bg-green-500/10 text-green-400',
   warning: 'bg-yellow-500/10 text-yellow-400',
   danger: 'bg-red-500/10 text-red-400',
