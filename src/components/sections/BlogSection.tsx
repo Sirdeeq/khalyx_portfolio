@@ -8,7 +8,7 @@ export default function BlogSection() {
 
   if (!blogPosts.length) return null
 
-  const posts = blogPosts.slice(0, 3)
+  const posts = blogPosts.slice(0, 6)
 
   return (
     <section id="blog" className="bg-[var(--bg-page)] px-5 sm:px-8 md:px-10 py-20 sm:py-24 md:py-32">

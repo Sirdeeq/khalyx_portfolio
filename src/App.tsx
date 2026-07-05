@@ -38,7 +38,9 @@ import UnauthorizedPage from './admin/pages/errors/UnauthorizedPage'
 
 /* Portfolio */
 import Portfolio from './components/Portfolio'
+import BlogPage from './components/sections/BlogPage'
 import BlogDetailPage from './components/sections/BlogDetailPage'
+import GalleryPage from './components/sections/GalleryPage'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -94,6 +96,10 @@ export default function App() {
           {/* Error routes */}
           <Route path="/401" element={<UnauthorizedPage />} />
           <Route path="/404" element={<NotFoundPage />} />
+
+          {/* Dedicated pages */}
+          <Route path="/blog" element={<BlogPage />} />
+          <Route path="/gallery" element={<GalleryPage />} />
 
           {/* Blog detail */}
           <Route path="/blog/:slug" element={<BlogDetailPage />} />

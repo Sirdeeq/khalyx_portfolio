@@ -1,5 +1,7 @@
 import { useState, useEffect, useCallback } from 'react'
+import { Link } from 'react-router-dom'
 import FadeIn from '../ui/FadeIn'
+import { ArrowRight } from 'lucide-react'
 import { usePortfolioData } from '../../context/PortfolioDataContext'
 
 const sizeHints: Record<string, string> = {
@@ -26,6 +28,8 @@ export default function GallerySection() {
     return () => { window.removeEventListener('keydown', handler); document.body.style.overflow = '' }
   }, [lightbox, close])
 
+  const visible = gallery.slice(0, 6)
+
   return (
     <section id="gallery" className="bg-[var(--bg-page)] px-5 sm:px-8 md:px-10 py-20 sm:py-24 md:py-32">
       <FadeIn y={40}>
@@ -38,7 +42,7 @@ export default function GallerySection() {
       </FadeIn>
 
       <div className="max-w-6xl mx-auto columns-1 sm:columns-2 md:columns-3 gap-4 space-y-4">
-        {gallery.map((item, i) => (
+        {visible.map((item, i) => (
           <FadeIn key={item.label + i} delay={0.05 * i}>
             <div
               onClick={() => item.src && setLightbox({ src: item.src, type: item.type || 'image', label: item.label })}
@@ -76,6 +80,16 @@ export default function GallerySection() {
           </FadeIn>
         ))}
       </div>
+
+      {gallery.length > 6 && (
+        <FadeIn y={20} delay={0.3}>
+          <div className="text-center mt-10">
+            <Link to="/gallery" className="inline-flex items-center gap-2 text-[var(--text-muted)] hover:text-[var(--text-body)] text-sm transition-colors">
+              View all <ArrowRight size={14} />
+            </Link>
+          </div>
+        </FadeIn>
+      )}
 
       {/* Lightbox */}
       {lightbox && (
