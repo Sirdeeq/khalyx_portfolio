@@ -35,11 +35,15 @@ export interface ProjectData {
   updatedAt: string
 }
 
-export interface GalleryData {
-  _id: string
+export interface GalleryAsset {
   src: string
   type: 'image' | 'video'
   thumbnail: string
+}
+
+export interface GalleryData {
+  _id: string
+  assets: GalleryAsset[]
   label: string
   aspect: string
   order: number

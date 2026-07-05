@@ -1,5 +1,4 @@
 import { useState, useEffect, useCallback } from 'react'
-import { Link } from 'react-router-dom'
 import FadeIn from '../ui/FadeIn'
 import { ArrowRight } from 'lucide-react'
 import { usePortfolioData } from '../../context/PortfolioDataContext'
@@ -42,17 +41,20 @@ export default function GallerySection() {
       </FadeIn>
 
       <div className="max-w-6xl mx-auto columns-1 sm:columns-2 md:columns-3 gap-4 space-y-4">
-        {visible.map((item, i) => (
-          <FadeIn key={item.label + i} delay={0.05 * i}>
+        {visible.map((item, i) => {
+          const first = item.assets?.[0]
+          const count = item.assets?.length || 0
+          return (
             <div
-              onClick={() => item.src && setLightbox({ src: item.src, type: item.type || 'image', label: item.label })}
-              className={`block w-full rounded-2xl overflow-hidden ${item.aspect} relative group cursor-pointer ${item.src ? '' : 'border border-[var(--border-subtle)]'}`}
+              key={item.label + i}
+              onClick={() => { if (count > 0) window.location.href = '/gallery' }}
+              className={`block w-full rounded-2xl overflow-hidden ${item.aspect} relative group ${count > 0 ? 'cursor-pointer' : 'border border-[var(--border-subtle)]'}`}
             >
-              {item.src ? (
-                (item.type || 'image') === 'video' ? (
+              {first?.src ? (
+                first.type === 'video' ? (
                   <>
-                    {(item.thumbnail ? (
-                      <img src={item.thumbnail} alt={item.label} className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-300" />
+                    {(first.thumbnail ? (
+                      <img src={first.thumbnail} alt={item.label} className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-300" />
                     ) : (
                       <div className="w-full h-full bg-gradient-to-br from-[var(--card-bg)] to-black/60 flex items-center justify-center">
                         <span className="text-[var(--text-body)] text-lg font-semibold drop-shadow-lg px-4 text-center">{item.label}</span>
@@ -65,9 +67,21 @@ export default function GallerySection() {
                         </svg>
                       </div>
                     </div>
+                    {count > 1 && (
+                      <span className="absolute top-2 right-2 bg-black/60 text-white text-[10px] px-2 py-0.5 rounded-full font-medium">
+                        {count} files
+                      </span>
+                    )}
                   </>
                 ) : (
-                  <img src={item.src} alt={item.label} className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-300" />
+                  <>
+                    <img src={first.src} alt={item.label} className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-300" />
+                    {count > 1 && (
+                      <span className="absolute top-2 right-2 bg-black/60 text-white text-[10px] px-2 py-0.5 rounded-full font-medium">
+                        {count} files
+                      </span>
+                    )}
+                  </>
                 )
               ) : (
                 <div className="w-full h-full bg-gradient-to-br from-[var(--card-bg)] to-white/[0.02] flex flex-col items-center justify-center text-[var(--text-body)] gap-3 group-hover:scale-[1.02] transition-all duration-300">
@@ -77,21 +91,20 @@ export default function GallerySection() {
                 </div>
               )}
             </div>
-          </FadeIn>
-        ))}
+          )
+        })}
       </div>
 
       {gallery.length > 6 && (
         <FadeIn y={20} delay={0.3}>
           <div className="text-center mt-10">
-            <Link to="/gallery" className="inline-flex items-center gap-2 text-[var(--text-muted)] hover:text-[var(--text-body)] text-sm transition-colors">
+            <a href="/gallery" className="inline-flex items-center gap-2 text-[var(--text-muted)] hover:text-[var(--text-body)] text-sm transition-colors">
               View all <ArrowRight size={14} />
-            </Link>
+            </a>
           </div>
         </FadeIn>
       )}
 
-      {/* Lightbox */}
       {lightbox && (
         <div className="fixed inset-0 z-[100] bg-black/90 flex items-center justify-center p-4" onClick={close}>
           <div className="relative max-w-5xl w-full max-h-[90vh] flex flex-col" onClick={(e) => e.stopPropagation()}>
@@ -99,13 +112,7 @@ export default function GallerySection() {
               Close [Esc]
             </button>
             {lightbox.type === 'video' ? (
-              <video
-                src={lightbox.src}
-                controls
-                autoPlay
-                className="w-full max-h-[85vh] rounded-2xl"
-                style={{ maxHeight: '85vh' }}
-              />
+              <video src={lightbox.src} controls autoPlay className="w-full max-h-[85vh] rounded-2xl" style={{ maxHeight: '85vh' }} />
             ) : (
               <img src={lightbox.src} alt={lightbox.label} className="w-full max-h-[85vh] object-contain rounded-2xl" />
             )}

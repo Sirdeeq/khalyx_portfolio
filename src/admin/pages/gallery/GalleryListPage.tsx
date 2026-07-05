@@ -6,13 +6,12 @@ import Card from '../../components/ui/Card'
 import Button from '../../components/ui/Button'
 import Modal from '../../components/ui/Modal'
 import ConfirmDialog from '../../components/ui/ConfirmDialog'
-import MediaUpload from '../../components/ui/MediaUpload'
+import MultiAssetUpload from '../../components/ui/MultiAssetUpload'
+import type { GalleryAsset } from '../../../lib/api/types'
 
 interface FormState {
   _id?: string
-  src: string
-  type: 'image' | 'video'
-  thumbnail: string
+  assets: GalleryAsset[]
   label: string
   aspect: string
 }
@@ -28,7 +27,7 @@ const aspectOptions = [
 ]
 
 const emptyForm = (): FormState => ({
-  src: '', type: 'image', thumbnail: '', label: '', aspect: 'aspect-[3/4]',
+  assets: [], label: '', aspect: 'aspect-[3/4]',
 })
 
 export default function GalleryListPage() {
@@ -63,7 +62,7 @@ export default function GalleryListPage() {
   })
 
   const openEdit = (item: typeof items[0]) => {
-    setForm({ _id: item._id, src: item.src, type: item.type || 'image', thumbnail: item.thumbnail || '', label: item.label, aspect: item.aspect })
+    setForm({ _id: item._id, assets: item.assets || [], label: item.label, aspect: item.aspect })
     setEditId(item._id)
   }
 
@@ -76,6 +75,8 @@ export default function GalleryListPage() {
     createMutation.mutate(form)
   }
 
+  const totalAssets = items.reduce((s, i) => s + (i.assets?.length || 0), 0)
+
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
@@ -84,18 +85,22 @@ export default function GalleryListPage() {
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-4 gap-4">
         <div className="bg-[var(--card-bg)] rounded-xl border border-[var(--border-subtle)] p-4 text-center">
           <p className="text-2xl font-bold text-[var(--text-body)]">{items.length}</p>
-          <p className="text-xs text-[var(--text-muted)] mt-1">Total Items</p>
+          <p className="text-xs text-[var(--text-muted)] mt-1">Items</p>
         </div>
         <div className="bg-[var(--card-bg)] rounded-xl border border-[var(--border-subtle)] p-4 text-center">
-          <p className="text-2xl font-bold text-[var(--text-body)]">{items.filter(i => (i.type || 'image') === 'image').length}</p>
+          <p className="text-2xl font-bold text-[var(--text-body)]">{totalAssets}</p>
+          <p className="text-xs text-[var(--text-muted)] mt-1">Total Assets</p>
+        </div>
+        <div className="bg-[var(--card-bg)] rounded-xl border border-[var(--border-subtle)] p-4 text-center">
+          <p className="text-2xl font-bold text-[var(--text-body)]">{items.filter(i => i.assets?.some(a => a.type === 'video')).length}</p>
+          <p className="text-xs text-[var(--text-muted)] mt-1">With Video</p>
+        </div>
+        <div className="bg-[var(--card-bg)] rounded-xl border border-[var(--border-subtle)] p-4 text-center">
+          <p className="text-2xl font-bold text-[var(--text-body)]">{items.reduce((s, i) => s + (i.assets?.filter(a => a.type === 'image').length || 0), 0)}</p>
           <p className="text-xs text-[var(--text-muted)] mt-1">Images</p>
-        </div>
-        <div className="bg-[var(--card-bg)] rounded-xl border border-[var(--border-subtle)] p-4 text-center">
-          <p className="text-2xl font-bold text-[var(--text-body)]">{items.filter(i => i.type === 'video').length}</p>
-          <p className="text-xs text-[var(--text-muted)] mt-1">Videos</p>
         </div>
       </div>
 
@@ -107,52 +112,50 @@ export default function GalleryListPage() {
           <p className="text-[var(--text-muted-30)] text-sm text-center py-8">No gallery items yet. Click "Add Item" to create one.</p>
         ) : (
           <div className="space-y-2">
-            {items.map((item) => (
-              <div key={item._id} className="flex items-center gap-4 bg-[var(--card-bg)] rounded-xl border border-[var(--border-subtle)] p-4 hover:border-[var(--text-muted-30)] transition-colors">
-                {/* Thumbnail */}
-                <div className="w-16 h-16 rounded-lg border border-[var(--border-subtle)] flex-shrink-0 flex items-center justify-center overflow-hidden bg-[var(--bg-page)]">
-                  {(item.type || 'image') === 'video' ? (
-                    item.thumbnail ? (
-                      <div className="relative w-full h-full">
-                        <img src={item.thumbnail} alt="" className="w-full h-full object-cover" />
-                        <span className="absolute inset-0 flex items-center justify-center bg-black/40">
-                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" className="w-5 h-5">
-                            <path d="M8 5v14l11-7z" />
-                          </svg>
-                        </span>
-                      </div>
+            {items.map((item) => {
+              const first = item.assets?.[0]
+              const assetCount = item.assets?.length || 0
+              return (
+                <div key={item._id} className="flex items-center gap-4 bg-[var(--card-bg)] rounded-xl border border-[var(--border-subtle)] p-4 hover:border-[var(--text-muted-30)] transition-colors">
+                  {/* Thumbnail */}
+                  <div className="w-16 h-16 rounded-lg border border-[var(--border-subtle)] flex-shrink-0 flex items-center justify-center overflow-hidden bg-[var(--bg-page)]">
+                    {first?.src ? (
+                      first.type === 'video' ? (
+                        <div className="relative w-full h-full">
+                          <img src={first.thumbnail || first.src} alt="" className="w-full h-full object-cover" />
+                          <span className="absolute inset-0 flex items-center justify-center bg-black/40">
+                            <svg viewBox="0 0 24 24" fill="white" className="w-5 h-5"><path d="M8 5v14l11-7z" /></svg>
+                          </span>
+                        </div>
+                      ) : (
+                        <img src={first.src} alt="" className="w-full h-full object-cover" />
+                      )
                     ) : (
-                      <div className="flex items-center justify-center w-full h-full bg-black/40">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6 text-[var(--text-muted-30)]">
-                          <path d="M8 5v14l11-7z" />
-                        </svg>
-                      </div>
-                    )
-                  ) : item.src ? (
-                    <img src={item.src} alt="" className="w-full h-full object-cover" />
-                  ) : (
-                    <span className="text-[var(--text-muted-20)] text-lg">+</span>
-                  )}
-                </div>
-
-                {/* Info */}
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2">
-                    <p className="text-sm font-medium text-[var(--text-body)] truncate">{item.label}</p>
-                    <span className={`text-[10px] px-1.5 py-0.5 rounded-full font-medium ${(item.type || 'image') === 'video' ? 'bg-purple-500/20 text-purple-400' : 'bg-blue-500/20 text-blue-400'}`}>
-                      {(item.type || 'image') === 'video' ? 'VIDEO' : 'IMAGE'}
-                    </span>
+                      <span className="text-[var(--text-muted-20)] text-lg">+</span>
+                    )}
                   </div>
-                  <p className="text-xs text-[var(--text-muted-40)] mt-0.5">{item.aspect}</p>
-                </div>
 
-                {/* Actions */}
-                <div className="flex items-center gap-2">
-                  <button onClick={() => openEdit(item)} className="text-xs text-[var(--text-muted)] hover:text-[var(--text-body)] transition-colors px-2 py-1">Edit</button>
-                  <button onClick={() => { setDeleteId(item._id) }} className="text-xs text-red-400/50 hover:text-red-400 transition-colors px-2 py-1">Delete</button>
+                  {/* Info */}
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2">
+                      <p className="text-sm font-medium text-[var(--text-body)] truncate">{item.label}</p>
+                      {assetCount > 0 && (
+                        <span className="text-[10px] px-1.5 py-0.5 rounded-full font-medium bg-white/10 text-[var(--text-muted)]">
+                          {assetCount} file{assetCount > 1 ? 's' : ''}
+                        </span>
+                      )}
+                    </div>
+                    <p className="text-xs text-[var(--text-muted-40)] mt-0.5">{item.aspect}</p>
+                  </div>
+
+                  {/* Actions */}
+                  <div className="flex items-center gap-2">
+                    <button onClick={() => openEdit(item)} className="text-xs text-[var(--text-muted)] hover:text-[var(--text-body)] transition-colors px-2 py-1">Edit</button>
+                    <button onClick={() => { setDeleteId(item._id) }} className="text-xs text-red-400/50 hover:text-red-400 transition-colors px-2 py-1">Delete</button>
+                  </div>
                 </div>
-              </div>
-            ))}
+              )
+            })}
           </div>
         )}
       </Card>
@@ -167,35 +170,7 @@ export default function GalleryListPage() {
                 className="w-full bg-[var(--card-bg)] border border-[var(--border-subtle)] rounded-xl px-4 py-2.5 text-[var(--text-body)] text-sm outline-none focus:border-[var(--text-muted-30)]" placeholder="Item label" />
             </div>
 
-            <div>
-              <label className="block text-sm font-medium text-[var(--text-muted-70)] mb-1.5">Type</label>
-              <div className="flex gap-2">
-                <button onClick={() => setForm({ ...form, type: 'image' })}
-                  className={`flex-1 py-2 rounded-xl text-sm font-medium transition-colors ${form.type === 'image' ? 'bg-blue-500/20 text-blue-400 border border-blue-500/30' : 'bg-[var(--card-bg)] text-[var(--text-muted)] border border-[var(--border-subtle)]'}`}>
-                  Image
-                </button>
-                <button onClick={() => setForm({ ...form, type: 'video' })}
-                  className={`flex-1 py-2 rounded-xl text-sm font-medium transition-colors ${form.type === 'video' ? 'bg-purple-500/20 text-purple-400 border border-purple-500/30' : 'bg-[var(--card-bg)] text-[var(--text-muted)] border border-[var(--border-subtle)]'}`}>
-                  Video
-                </button>
-              </div>
-            </div>
-
-            <MediaUpload
-              value={form.src}
-              onChange={(url, meta) => {
-                const updates: Partial<FormState> = {
-                  src: url,
-                  type: meta?.type || form.type,
-                  thumbnail: meta?.thumbnail || '',
-                }
-                if (meta?.aspect) updates.aspect = meta.aspect
-                setForm({ ...form, ...updates })
-              }}
-              acceptType={form.type === 'video' ? 'video' : 'image'}
-              label={form.type === 'video' ? 'Video File' : 'Image File'}
-              placeholder={form.type === 'video' ? 'Or paste video URL...' : 'Or paste image URL...'}
-            />
+            <MultiAssetUpload assets={form.assets} onChange={(assets) => setForm({ ...form, assets })} />
 
             <div>
               <label className="block text-sm font-medium text-[var(--text-muted-70)] mb-1.5">Aspect Ratio</label>
@@ -206,13 +181,6 @@ export default function GalleryListPage() {
                 ))}
               </select>
             </div>
-
-            {form.type === 'video' && form.thumbnail && (
-              <div>
-                <label className="block text-sm font-medium text-[var(--text-muted-70)] mb-1.5">Thumbnail Preview</label>
-                <img src={form.thumbnail} alt="" className="w-32 h-24 rounded-lg object-cover border border-[var(--border-subtle)]" />
-              </div>
-            )}
 
             <Button onClick={saveEdit} loading={updateMutation.isPending} className="w-full">Save Changes</Button>
           </div>
@@ -228,35 +196,7 @@ export default function GalleryListPage() {
               className="w-full bg-[var(--card-bg)] border border-[var(--border-subtle)] rounded-xl px-4 py-2.5 text-[var(--text-body)] text-sm outline-none focus:border-[var(--text-muted-30)]" placeholder="Item label" />
           </div>
 
-          <div>
-            <label className="block text-sm font-medium text-[var(--text-muted-70)] mb-1.5">Type</label>
-            <div className="flex gap-2">
-              <button onClick={() => setForm({ ...form, type: 'image' })}
-                className={`flex-1 py-2 rounded-xl text-sm font-medium transition-colors ${form.type === 'image' ? 'bg-blue-500/20 text-blue-400 border border-blue-500/30' : 'bg-[var(--card-bg)] text-[var(--text-muted)] border border-[var(--border-subtle)]'}`}>
-                Image
-              </button>
-              <button onClick={() => setForm({ ...form, type: 'video' })}
-                className={`flex-1 py-2 rounded-xl text-sm font-medium transition-colors ${form.type === 'video' ? 'bg-purple-500/20 text-purple-400 border border-purple-500/30' : 'bg-[var(--card-bg)] text-[var(--text-muted)] border border-[var(--border-subtle)]'}`}>
-                Video
-              </button>
-            </div>
-          </div>
-
-          <MediaUpload
-            value={form.src}
-            onChange={(url, meta) => {
-              const updates: Partial<FormState> = {
-                src: url,
-                type: meta?.type || form.type,
-                thumbnail: meta?.thumbnail || '',
-              }
-              if (meta?.aspect) updates.aspect = meta.aspect
-              setForm({ ...form, ...updates })
-            }}
-            acceptType={form.type === 'video' ? 'video' : 'image'}
-            label={form.type === 'video' ? 'Video File' : 'Image File'}
-            placeholder={form.type === 'video' ? 'Or paste video URL...' : 'Or paste image URL...'}
-          />
+          <MultiAssetUpload assets={form.assets} onChange={(assets) => setForm({ ...form, assets })} />
 
           <div>
             <label className="block text-sm font-medium text-[var(--text-muted-70)] mb-1.5">Aspect Ratio</label>

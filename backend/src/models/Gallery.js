@@ -1,9 +1,13 @@
 const mongoose = require('mongoose');
 
-const gallerySchema = new mongoose.Schema({
-  src: { type: String, default: '' },
+const assetSchema = new mongoose.Schema({
+  src: { type: String, required: true },
   type: { type: String, enum: ['image', 'video'], default: 'image' },
   thumbnail: { type: String, default: '' },
+}, { _id: false });
+
+const gallerySchema = new mongoose.Schema({
+  assets: { type: [assetSchema], default: [], validate: v => v.length <= 10 },
   label: { type: String, required: true, trim: true },
   aspect: { type: String, default: 'aspect-[3/4]' },
   order: { type: Number, default: 0 },

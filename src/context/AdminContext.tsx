@@ -13,10 +13,14 @@ export interface Project {
   col2_img: string
 }
 
-export interface GalleryItem {
+export interface GalleryAsset {
   src: string
   type: 'image' | 'video'
   thumbnail: string
+}
+
+export interface GalleryItem {
+  assets: GalleryAsset[]
   label: string
   aspect: string
 }
@@ -54,15 +58,16 @@ const defaults: SiteData = {
     { num: '04', name: 'GAMSAJ International Ltd', category: 'Construction & Engineering', features: 'Building construction \u2022 Civil engineering \u2022 Real estate \u2022 Project management \u2022 Industrial construction', role: 'Lead Developer', url: 'https://gamsaj.com', col1_img1: '', col1_img2: '', col2_img: '' },
   ],
   gallery: [
-    { src: '', type: 'image', thumbnail: '', label: 'Behind-the-scenes', aspect: 'aspect-[3/4]' },
-    { src: '', type: 'image', thumbnail: '', label: 'Event coverage', aspect: 'aspect-[4/3]' },
-    { src: '', type: 'image', thumbnail: '', label: 'Professional portrait', aspect: 'aspect-[3/4]' },
-    { src: '', type: 'image', thumbnail: '', label: 'Design work', aspect: 'aspect-[4/5]' },
-    { src: '', type: 'image', thumbnail: '', label: 'Coding sessions', aspect: 'aspect-[3/4]' },
-    { src: '', type: 'image', thumbnail: '', label: 'Team / Event', aspect: 'aspect-[4/3]' },
-    { src: '', type: 'image', thumbnail: '', label: 'Professional', aspect: 'aspect-[3/4]' },
-    { src: '', type: 'image', thumbnail: '', label: 'Design showcase', aspect: 'aspect-[4/5]' },
-    { src: '', type: 'image', thumbnail: '', label: 'Coding / Workspace', aspect: 'aspect-[3/4]' },
+    { assets: [], label: 'Behind-the-scenes', aspect: 'aspect-[3/4]' },
+    { assets: [], label: 'Event coverage', aspect: 'aspect-[4/3]' },
+    { assets: [], label: 'Professional portrait', aspect: 'aspect-[3/4]' },
+    { assets: [], label: 'Design work', aspect: 'aspect-[4/5]' },
+    { assets: [], label: 'Coding sessions', aspect: 'aspect-[3/4]' },
+    { assets: [], label: 'Team / Event', aspect: 'aspect-[4/3]' },
+    { assets: [], label: 'Professional', aspect: 'aspect-[3/4]' },
+    { assets: [], label: 'Design showcase', aspect: 'aspect-[4/5]' },
+    { assets: [], label: 'Motion graphics', aspect: 'aspect-[16/9]' },
+    { assets: [], label: 'Photography', aspect: 'aspect-[3/4]' },
   ],
   techStack: [
     { category: 'Frontend', items: ['React', 'TypeScript', 'Next.js', 'Tailwind CSS', 'Framer Motion'] },
