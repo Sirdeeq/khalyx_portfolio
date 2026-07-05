@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import { uploadApi } from '../../../lib/api/upload'
 import toast from 'react-hot-toast'
 import type { GalleryAsset } from '../../../lib/api/types'
@@ -13,6 +13,7 @@ const MAX = 10
 
 export default function MultiAssetUpload({ assets, onChange, maxSlots = MAX }: MultiAssetUploadProps) {
   const inputRef = useRef<HTMLInputElement>(null)
+  const [dragOver, setDragOver] = useState(false)
 
   const uploadFile = async (file: File): Promise<GalleryAsset | null> => {
     const isVideo = file.type.startsWith('video/')
@@ -26,16 +27,26 @@ export default function MultiAssetUpload({ assets, onChange, maxSlots = MAX }: M
     } catch { toast.error('Upload failed'); return null }
   }
 
-  const handleFiles = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files
-    if (!files?.length) return
-    e.target.value = ''
+  const processFiles = async (files: FileList) => {
     const remaining = maxSlots - assets.length
     const batch = Array.from(files).slice(0, remaining)
     if (batch.length < files.length) toast(`Only ${remaining} slot(s) left — uploading first ${remaining}`, { icon: '⚠️' })
     const results = await Promise.all(batch.map(uploadFile))
     const added = results.filter(Boolean) as GalleryAsset[]
     if (added.length) onChange([...assets, ...added])
+  }
+
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault()
+    setDragOver(false)
+    if (e.dataTransfer.files?.length) processFiles(e.dataTransfer.files)
+  }
+
+  const handleFiles = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files
+    if (!files?.length) return
+    e.target.value = ''
+    await processFiles(files)
   }
 
   const remove = (i: number) => {
@@ -114,7 +125,12 @@ export default function MultiAssetUpload({ assets, onChange, maxSlots = MAX }: M
       {canAdd && (
         <div
           onClick={() => inputRef.current?.click()}
-          className="border-2 border-dashed border-[var(--border-subtle)] rounded-xl p-4 text-center cursor-pointer hover:border-purple-500/40 hover:bg-purple-500/5 transition-all"
+          onDragOver={(e) => { e.preventDefault(); setDragOver(true) }}
+          onDragLeave={() => setDragOver(false)}
+          onDrop={handleDrop}
+          className={`border-2 border-dashed rounded-xl p-4 text-center cursor-pointer transition-all ${
+            dragOver ? 'border-purple-500 bg-purple-500/10' : 'border-[var(--border-subtle)] hover:border-purple-500/40 hover:bg-purple-500/5'
+          }`}
         >
           <input ref={inputRef} type="file" accept="image/*,video/*" multiple onChange={handleFiles} className="hidden" />
           <span className="text-sm text-[var(--text-muted)]">+ Add asset ({assets.length}/{maxSlots})</span>
