@@ -3,6 +3,12 @@ import { useQuery } from '@tanstack/react-query'
 import { blogApi } from '../../lib/api/blog'
 import { ArrowLeft, Clock, Calendar } from 'lucide-react'
 
+const allImages = (post: { images?: string[]; image?: string }) => {
+  const imgs = (post.images || []).filter(Boolean)
+  if (post.image && !imgs.includes(post.image)) imgs.unshift(post.image)
+  return imgs
+}
+
 export default function BlogDetailPage() {
   const { slug } = useParams<{ slug: string }>()
 
@@ -30,6 +36,7 @@ export default function BlogDetailPage() {
   }
 
   const post = data.data
+  const images = allImages(post)
 
   return (
     <div className="min-h-screen bg-[#0C0C0C]">
@@ -38,9 +45,13 @@ export default function BlogDetailPage() {
           <ArrowLeft size={16} /> Back to home
         </Link>
 
-        {post.image && (
-          <div className="aspect-[2/1] rounded-2xl overflow-hidden mb-8 bg-gradient-to-br from-[#18011F] via-[#B600A8]/20 to-[#7621B0]/20">
-            <img src={post.image} alt={post.title} className="w-full h-full object-cover" />
+        {images.length > 0 && (
+          <div className={`grid gap-4 mb-8 ${images.length === 1 ? 'grid-cols-1' : images.length === 2 ? 'grid-cols-2' : 'grid-cols-2 sm:grid-cols-3'}`}>
+            {images.map((src, i) => (
+              <div key={i} className={`rounded-2xl overflow-hidden bg-gradient-to-br from-[#18011F] via-[#B600A8]/20 to-[#7621B0]/20 ${i === 0 ? images.length > 1 ? 'col-span-2 sm:col-span-1' : '' : ''}`}>
+                <img src={src} alt={`${post.title} ${i + 1}`} className="w-full h-48 object-cover" />
+              </div>
+            ))}
           </div>
         )}
 

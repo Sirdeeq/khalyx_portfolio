@@ -20,6 +20,7 @@ interface BlogFormProps {
     excerpt: string
     content: string
     image: string
+    images: string[]
     author: string
     tags: string[]
     readTime: string
@@ -38,6 +39,7 @@ export default function BlogForm({ initialData }: BlogFormProps) {
     excerpt: '',
     content: '',
     image: '',
+    images: ['', '', '', '', ''],
     author: 'Sadiq Baba Idris',
     tags: '',
     readTime: '',
@@ -45,17 +47,23 @@ export default function BlogForm({ initialData }: BlogFormProps) {
   })
 
   useEffect(() => {
-    if (initialData) setForm({
-      title: initialData.title,
-      slug: initialData.slug,
-      excerpt: initialData.excerpt || '',
-      content: initialData.content,
-      image: initialData.image || '',
-      author: initialData.author || 'Sadiq Baba Idris',
-      tags: initialData.tags?.join(', ') || '',
-      readTime: initialData.readTime || '',
-      isPublished: initialData.isPublished,
-    })
+    if (initialData) {
+      const imgs = ['', '', '', '', '']
+      const src = initialData.images || []
+      src.forEach((url, i) => { if (i < 5) imgs[i] = url })
+      setForm({
+        title: initialData.title,
+        slug: initialData.slug,
+        excerpt: initialData.excerpt || '',
+        content: initialData.content,
+        image: initialData.image || '',
+        images: imgs,
+        author: initialData.author || 'Sadiq Baba Idris',
+        tags: initialData.tags?.join(', ') || '',
+        readTime: initialData.readTime || '',
+        isPublished: initialData.isPublished,
+      })
+    }
   }, [initialData])
 
   const mutation = useMutation({
@@ -105,7 +113,21 @@ export default function BlogForm({ initialData }: BlogFormProps) {
               className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-[#D7E2EA] outline-none focus:border-white/30 text-sm resize-none font-mono" />
           </div>
 
-          <ImageUpload value={form.image} onChange={(v) => set('image', v)} label="Featured Image (1200×630px)" placeholder="Image URL..." />
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {[0, 1, 2, 3, 4].map((i) => (
+              <ImageUpload
+                key={i}
+                value={form.images[i]}
+                onChange={(v) => {
+                  const imgs = [...form.images]
+                  imgs[i] = v
+                  set('images', imgs)
+                }}
+                label={`Image ${i + 1}${i === 0 ? ' (Featured)' : ''}`}
+                placeholder="Image URL..."
+              />
+            ))}
+          </div>
 
           <label className="flex items-center gap-3 cursor-pointer">
             <input type="checkbox" checked={form.isPublished} onChange={(e) => set('isPublished', e.target.checked)}

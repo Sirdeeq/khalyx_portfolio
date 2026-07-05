@@ -132,6 +132,7 @@ export interface BlogData {
   excerpt: string
   content: string
   image: string
+  images: string[]
   author: string
   tags: string[]
   readTime: string

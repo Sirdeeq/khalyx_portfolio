@@ -27,8 +27,8 @@ export default function BlogSection() {
             <Link to={`/blog/${post.slug}`} className="block h-full">
               <div className="bg-white/5 backdrop-blur-xl rounded-2xl border border-white/10 overflow-hidden hover:border-white/20 hover:bg-white/[0.07] transition-all duration-300 group h-full flex flex-col">
                 <div className="aspect-[16/9] bg-gradient-to-br from-[#18011F] via-[#B600A8]/30 to-[#7621B0]/30 flex items-center justify-center">
-                  {post.image ? (
-                    <img src={post.image} alt={post.title} className="w-full h-full object-cover" />
+                  {(post.images?.[0] || post.image) ? (
+                    <img src={post.images?.[0] || post.image} alt={post.title} className="w-full h-full object-cover" />
                   ) : (
                     <span className="text-[#D7E2EA]/20 text-4xl font-black">S</span>
                   )}

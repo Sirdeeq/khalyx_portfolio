@@ -6,6 +6,7 @@ const blogSchema = new mongoose.Schema({
   excerpt: { type: String, default: '' },
   content: { type: String, required: true },
   image: { type: String, default: '' },
+  images: [{ type: String }],
   author: { type: String, default: 'Sadiq Baba Idris' },
   tags: [{ type: String, trim: true }],
   readTime: { type: String, default: '' },

@@ -28,7 +28,7 @@ export interface PortfolioData {
   healthcare: Array<{ _id?: string; title: string; period: string; brief: string; responsibilities: string[]; highlight?: string }>
   organizations: Array<{ name: string; role: string; description: string; url: string }>
   testimonials: Array<{ name: string; role: string; company: string; text: string; avatar: string; rating: number }>
-  blogPosts: Array<{ _id?: string; title: string; slug: string; excerpt: string; image: string; tags: string[]; readTime: string; createdAt: string }>
+  blogPosts: Array<{ _id?: string; title: string; slug: string; excerpt: string; image: string; images: string[]; tags: string[]; readTime: string; createdAt: string }>
   futureProjects: Array<{ name: string; description: string; category: string; status: string }>
 }
 
@@ -98,7 +98,7 @@ export function PortfolioDataProvider({ children }: { children: React.ReactNode 
     testimonials: Array.isArray(testimRaw?.data) && testimRaw.data.length ? testimRaw.data : defaultData.testimonials,
     blogPosts: Array.isArray(blogRaw?.data) && blogRaw.data.length ? blogRaw.data.map((p: any) => ({
       _id: p._id, title: p.title, slug: p.slug, excerpt: p.excerpt || '', image: p.image || '',
-      tags: p.tags || [], readTime: p.readTime || '', createdAt: p.createdAt || '',
+      images: p.images || [], tags: p.tags || [], readTime: p.readTime || '', createdAt: p.createdAt || '',
     })) : [],
     futureProjects: Array.isArray(futureRaw?.data) && futureRaw.data.length ? futureRaw.data : defaultData.futureProjects,
   }
