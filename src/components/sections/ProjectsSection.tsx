@@ -1,7 +1,9 @@
-﻿import { useScroll, useTransform, motion } from 'framer-motion';
+﻿import { useState } from 'react';
+import { useScroll, useTransform, motion } from 'framer-motion';
 import { useRef } from 'react';
 import FadeIn from '../ui/FadeIn';
 import LiveProjectButton from '../ui/LiveProjectButton';
+import ImageLightbox from '../ui/ImageLightbox';
 import { usePortfolioData } from '../../context/PortfolioDataContext';
 
 export default function ProjectsSection() {
@@ -12,6 +14,7 @@ export default function ProjectsSection() {
     offset: ['start start', 'end end'],
   });
 
+  const [lightbox, setLightbox] = useState<{ src: string; label: string } | null>(null)
   const total = projects.length;
   const s0 = useTransform(scrollYProgress, [0 / total, 1 / total], [1 - (total - 1 - 0) * 0.03, 1]);
   const s1 = useTransform(scrollYProgress, [1 / total, 2 / total], [1 - (total - 1 - 1) * 0.03, 1]);
@@ -80,7 +83,8 @@ export default function ProjectsSection() {
                 <div className="flex gap-4">
                   <div className="w-[40%] flex flex-col gap-4">
                     {project.col1_img1 ? (
-                      <img src={project.col1_img1} alt="" className="w-full rounded-[40px] sm:rounded-[50px] md:rounded-[60px] object-cover" style={{ height: 'clamp(130px, 16vw, 230px)' }} />
+                      <img src={project.col1_img1} alt="" onClick={() => setLightbox({ src: project.col1_img1, label: `${project.name} — screenshot` })}
+                        className="w-full rounded-[40px] sm:rounded-[50px] md:rounded-[60px] object-cover cursor-pointer hover:opacity-80 transition-opacity" style={{ height: 'clamp(130px, 16vw, 230px)' }} />
                     ) : (
                       <div className="w-full rounded-[40px] sm:rounded-[50px] md:rounded-[60px] bg-[var(--card-bg)] border border-[var(--border-subtle)] flex flex-col items-center justify-center text-[var(--text-muted-30)] text-xs" style={{ height: 'clamp(130px, 16vw, 230px)' }}>
                         <span className="text-lg mb-1">+</span>
@@ -88,7 +92,8 @@ export default function ProjectsSection() {
                       </div>
                     )}
                     {project.col1_img2 ? (
-                      <img src={project.col1_img2} alt="" className="w-full rounded-[40px] sm:rounded-[50px] md:rounded-[60px] object-cover" style={{ height: 'clamp(160px, 22vw, 340px)' }} />
+                      <img src={project.col1_img2} alt="" onClick={() => setLightbox({ src: project.col1_img2, label: `${project.name} — screenshot` })}
+                        className="w-full rounded-[40px] sm:rounded-[50px] md:rounded-[60px] object-cover cursor-pointer hover:opacity-80 transition-opacity" style={{ height: 'clamp(160px, 22vw, 340px)' }} />
                     ) : (
                       <div className="w-full rounded-[40px] sm:rounded-[50px] md:rounded-[60px] bg-[var(--card-bg)] border border-[var(--border-subtle)] flex flex-col items-center justify-center text-[var(--text-muted-30)] text-xs" style={{ height: 'clamp(160px, 22vw, 340px)' }}>
                         <span className="text-lg mb-1">+</span>
@@ -98,7 +103,8 @@ export default function ProjectsSection() {
                   </div>
                   <div className="w-[60%]">
                     {project.col2_img ? (
-                      <img src={project.col2_img} alt="" className="w-full h-full rounded-[40px] sm:rounded-[50px] md:rounded-[60px] object-cover" />
+                      <img src={project.col2_img} alt="" onClick={() => setLightbox({ src: project.col2_img, label: `${project.name} — screenshot` })}
+                        className="w-full h-full rounded-[40px] sm:rounded-[50px] md:rounded-[60px] object-cover cursor-pointer hover:opacity-80 transition-opacity" />
                     ) : (
                       <div className="w-full h-full rounded-[40px] sm:rounded-[50px] md:rounded-[60px] bg-[var(--card-bg)] border border-[var(--border-subtle)] flex flex-col items-center justify-center text-[var(--text-muted-30)] text-xs" style={{ minHeight: 'clamp(300px, 40vw, 600px)' }}>
                         <span className="text-lg mb-1">+</span>
@@ -112,6 +118,10 @@ export default function ProjectsSection() {
           </div>
         ))}
       </div>
+
+      {lightbox && (
+        <ImageLightbox src={lightbox.src} label={lightbox.label} onClose={() => setLightbox(null)} />
+      )}
     </section>
   );
 }
