@@ -23,7 +23,7 @@ import { Link } from 'react-router-dom'
 function PortfolioContent() {
   return (
     <PortfolioDataProvider>
-      <div style={{ overflowX: 'clip' }}>
+      <div style={{ overflowX: 'clip' }} className="pb-16 md:pb-0">
         <ParticleBackground />
         <Navbar />
         <HeroSection />
