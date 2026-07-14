@@ -70,6 +70,11 @@ export default function ProjectsSection() {
                     <p className="text-[var(--text-muted)] text-xs mt-1">
                       {project.role}
                     </p>
+                    {project.impact && (
+                      <p className="text-[var(--text-muted-70)] text-xs mt-2 leading-relaxed border-l-2 border-[var(--text-muted-20)] pl-3 italic">
+                        {project.impact}
+                      </p>
+                    )}
                   </div>
                   {project.url ? (
                     <a href={project.url} target="_blank" rel="noopener noreferrer">

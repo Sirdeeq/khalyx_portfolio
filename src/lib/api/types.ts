@@ -24,6 +24,7 @@ export interface ProjectData {
   name: string
   category: string
   features: string
+  impact: string
   role: string
   url: string
   col1_img1: string

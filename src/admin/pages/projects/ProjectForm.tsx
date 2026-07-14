@@ -15,6 +15,7 @@ interface ProjectFormProps {
     name: string
     category: string
     features: string
+    impact: string
     role: string
     url: string
     col1_img1: string
@@ -29,7 +30,7 @@ export default function ProjectForm({ initialData }: ProjectFormProps) {
   const isEdit = !!initialData
 
   const [form, setForm] = useState({
-    num: '', name: '', category: '', features: '', role: '', url: '',
+    num: '', name: '', category: '', features: '', impact: '', role: '', url: '',
     col1_img1: '', col1_img2: '', col2_img: '',
   })
 
@@ -67,6 +68,12 @@ export default function ProjectForm({ initialData }: ProjectFormProps) {
             <label className="block text-sm font-medium text-[#D7E2EA]/70 mb-1.5">Features</label>
             <input value={form.features} onChange={(e) => set('features', e.target.value)}
               className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-[#D7E2EA] outline-none focus:border-white/30 text-sm" />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-[#D7E2EA]/70 mb-1.5">Impact (optional)</label>
+            <textarea value={form.impact} onChange={(e) => set('impact', e.target.value)} rows={2}
+              placeholder="Describe the impact of this project..."
+              className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-[#D7E2EA] outline-none focus:border-white/30 text-sm resize-none" />
           </div>
           <Input label="URL (optional)" value={form.url} onChange={(e) => set('url', e.target.value)} placeholder="https://..." />
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">

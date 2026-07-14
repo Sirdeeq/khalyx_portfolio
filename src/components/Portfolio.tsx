@@ -12,6 +12,7 @@ import ProjectsSection from './sections/ProjectsSection'
 import MediaSection from './sections/MediaSection'
 import StatsSection from './sections/StatsSection'
 import HealthcareSection from './sections/HealthcareSection'
+import HumanitarianWorkSection from './sections/HumanitarianWorkSection'
 import OrganizationsSection from './sections/OrganizationsSection'
 import EducationSection from './sections/EducationSection'
 import TestimonialsSection from './sections/TestimonialsSection'
@@ -46,6 +47,7 @@ function PortfolioContent() {
         <ProjectsSection />
         <MediaSection />
         <HealthcareSection />
+        <HumanitarianWorkSection />
         <OrganizationsSection />
         <EducationSection />
         <TestimonialsSection />

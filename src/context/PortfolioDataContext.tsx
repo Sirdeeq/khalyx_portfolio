@@ -18,7 +18,7 @@ export interface PortfolioData {
   hero: { roles: string[]; tagline: string; portrait: string }
   about: { bio: string; passion: string; values: string[] }
   projects: Array<{
-    _id?: string; num: string; name: string; category: string; features: string; role: string; url?: string
+    _id?: string; num: string; name: string; category: string; features: string; impact?: string; role: string; url?: string
     col1_img1: string; col1_img2: string; col2_img: string
   }>
   gallery: Array<{ _id?: string; assets: Array<{ src: string; type: 'image' | 'video'; thumbnail: string }>; label: string; aspect: string }>
@@ -35,7 +35,7 @@ export interface PortfolioData {
 const defaultData: PortfolioData = {
   hero: defaults.hero,
   about: defaults.about,
-  projects: defaults.projects.map(p => ({ ...p, col1_img1: p.col1_img1 || '', col1_img2: p.col1_img2 || '', col2_img: p.col2_img || '' })),
+  projects: defaults.projects.map(p => ({ ...p, impact: p.impact || '', col1_img1: p.col1_img1 || '', col1_img2: p.col1_img2 || '', col2_img: p.col2_img || '' })),
   gallery: defaults.gallery.map(g => ({ ...g, assets: g.assets || [] })),
   techStack: defaults.techStack,
   services: defaults.services.map(s => ({ name: s, description: '', icon: '' })),
@@ -84,7 +84,7 @@ export function PortfolioDataProvider({ children }: { children: React.ReactNode 
     hero: heroData ? { roles: heroData.roles, tagline: heroData.tagline, portrait: heroData.portrait } : defaultData.hero,
     about: aboutData ? { bio: aboutData.bio, passion: aboutData.passion, values: aboutData.values } : defaultData.about,
     projects: projectsRaw?.data?.length ? projectsRaw.data.map(p => ({
-      _id: p._id, num: p.num, name: p.name, category: p.category, features: p.features, role: p.role, url: p.url,
+      _id: p._id, num: p.num, name: p.name, category: p.category, features: p.features, impact: p.impact || '', role: p.role, url: p.url,
       col1_img1: p.col1_img1 || '', col1_img2: p.col1_img2 || '', col2_img: p.col2_img || '',
     })) : defaultData.projects,
     gallery: galleryRaw?.data?.length ? galleryRaw.data.map(g => ({

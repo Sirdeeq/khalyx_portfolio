@@ -5,6 +5,7 @@ const projectSchema = new mongoose.Schema({
   name: { type: String, required: true, trim: true },
   category: { type: String, required: true, trim: true },
   features: { type: String, default: '' },
+  impact: { type: String, default: '' },
   role: { type: String, default: '' },
   url: { type: String, default: '' },
   col1_img1: { type: String, default: '' },

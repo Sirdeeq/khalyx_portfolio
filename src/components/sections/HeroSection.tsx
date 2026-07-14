@@ -42,7 +42,7 @@ export default function HeroSection() {
             className="text-[var(--text-body)]/60 font-light uppercase tracking-wide text-center max-w-4xl mx-auto mt-4"
             style={{ fontSize: 'clamp(0.6rem, 1vw, 0.9rem)' }}
           >
-            {hero.roles.join(' \u2022 ')}
+            {hero.roles.join(' | ')}
           </p>
         </FadeIn>
 
